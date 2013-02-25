@@ -44,7 +44,7 @@ class AfdelingFunctie(models.Model):
     beschrijving = models.TextField("Functiebeschrijving")
 
     def __unicode__(self):
-        return "%s in Afdeling %s" %(self.functie.naam, self.afdeling.naam)
+        return "%s van %s" %(self.functie.naam, self.afdeling.naam)
 
 
 class Taak(models.Model):
