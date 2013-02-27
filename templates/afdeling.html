@@ -55,16 +55,16 @@ $(function() {
     {% block left_panel %}
     <h3> Commissies en Afdelingen </h3>
     {% for afdeling in afdelingen%}
-    <p> <a href="/bestuursmodel/afdeling/{{afdeling.naam}}"> {{afdeling.naam}} </a> </p>
+    <p> <a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a> </p>
     {% endfor %}
     {% endblock %}
 </div>
 
 <div class="span9 right">
 
-<h1> <a href="/bestuursmodel/afdeling/{{afdeling.naam}}"> {{afdeling.naam}} </a> </h1>
+<h1> <a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a> </h1>
 {% if afdeling.rapporteert_aan %}
-<p> <b> Rapporteert aan: </b> <a href="/bestuursmodel/afdeling/{{afdeling.rapporteert_aan}}"> {{afdeling.rapporteert_aan}} </a> </p>
+<p> <b> Rapporteert aan: </b> <a href="/bestuursmodel/afdeling/{{afdeling.rapporteert_aan.id}}"> {{afdeling.rapporteert_aan}} </a> </p>
 {% endif %}
 <p> <b> Taakbeschrijving: </b> {{afdeling.taakbeschrijving}} </p>
 
@@ -79,7 +79,7 @@ $(function() {
 <h2> Commissies van {{afdeling.naam}} </h2>
 <ul>
 {% for commissie in afdeling.commissies.all %}
-    <li> <a href="/bestuursmodel/afdeling/{{commissie.naam}}"> {{ commissie.naam }} </a> </li>
+    <li> <a href="/bestuursmodel/afdeling/{{commissie.id}}"> {{ commissie.naam }} </a> </li>
 {% endfor %}
 </ul>
 
