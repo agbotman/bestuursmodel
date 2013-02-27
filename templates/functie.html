@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title></title>
+
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.responsive.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/mezzanine.css">
+{% block extra_css %}{% endblock %}
+
+<script src="{{ STATIC_URL }}mezzanine/js/{{ settings.JQUERY_FILENAME }}"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+<script>
+$(function() {
+    $('.middleinput:text, textarea').addClass('xlarge');
+    $('.control-group label').addClass('control-label');
+});
+</script>
+{% block extra_js %}{% endblock %}
+<!--[if lt IE 9]>
+<script src="{{ STATIC_URL }}js/html5shiv.js"></script>
+<![endif]-->
+
+{% block extra_head %}{% endblock %}
+
+</head>
+<body id="{% block body_id %}body{% endblock %}">
+
+<div class="navbar navbar-inverse">
+<div class="navbar-inner">
+<div class="container">
+    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </a>
+    <p class="brand">Bestuursmodel SVW'27</p>
+    <p class="tagline">Een elftal aan het roer</p>
+    <div class="nav-collapse">
+    </div>
+</div>
+</div>
+</div>
+
+
+<div class="container">
+<div class="row">
+
+<div class="span3 left">
+    {% block left_panel %}
+    <h3> Functies </h3>
+    {% for functie in functies %}
+    <p> <a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a> </p>
+    {% endfor %}
+    {% endblock %}
+</div>
+
+<div class="span9 right">
+
+<h1> <a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a> </h1>
+<p> <b> Functiebeschrijving: </b> {{functie.beschrijving}} </p>
+
+<h2> Taken</h2>
+<ul>
+{% for taak in functie.taken.all %}
+    <li>{{ taak.beschrijving }}</li>
+{% endfor %}
+</ul>
+
+<h2> Verantwoordelijkheden</h2>
+<ul>
+{% for verantwoordelijkheid in functie.verantwoordelijkheden.all %}
+    <li>{{ verantwoordelijkheid.beschrijving }}</li>
+{% endfor %}
+</ul>
+
+<h2> Functie-eisen</h2>
+<ul>
+{% for functieeis in functie.functie_eisen.all %}
+    <li>{{ functieeis.beschrijving }}</li>
+{% endfor %}
+</ul>
+
+</div>
+
+</div>
+</div>
+
+
