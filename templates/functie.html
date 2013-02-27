@@ -65,6 +65,13 @@ $(function() {
 <h1> <a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a> </h1>
 <p> <b> Functiebeschrijving: </b> {{functie.beschrijving}} </p>
 
+<h2> Commissies:</h2>
+
+{% for afdelingfunctie in afdelingfuncties %}
+    <li>{{ afdelingfunctie.afdeling.naam }}</li>
+{% endfor %}
+
+
 <h2> Taken</h2>
 <ul>
 {% for taak in functie.taken.all %}
