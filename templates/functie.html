@@ -68,7 +68,7 @@ $(function() {
 <h2> Commissies:</h2>
 <ul>
 {% for afdelingfunctie in afdelingfuncties %}
-    <li> <a href="/bestuursmodel/afdeling/{{afdelingfunctie.afdeling.id}}"> {{ afdelingfunctie.afdeling.naam }} </a> : afdelingfunctie.beschrijving </li>
+    <li> <a href="/bestuursmodel/afdeling/{{afdelingfunctie.afdeling.id}}"> {{ afdelingfunctie.afdeling.naam }} </a> : {{ afdelingfunctie.beschrijving }} </li>
 {% endfor %}
 </ul>
 
