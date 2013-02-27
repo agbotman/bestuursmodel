@@ -5,7 +5,7 @@ from .models import *
 def afdelingoverzicht(request):
     return render_to_response('afdelingoverzicht.html')
 
-def afdeling(request, afdelingsid):
+def afdeling(request, afdelingsid=1):
     try:
         afdeling = Afdeling.objects.get(id=int(afdelingsid))
     except:
