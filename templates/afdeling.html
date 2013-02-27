@@ -69,6 +69,7 @@ $(function() {
 <p> <b> Taakbeschrijving: </b> {{afdeling.taakbeschrijving}} </p>
 
 <h2> Functies van {{afdeling.naam}} </h2>
+{{afdeling.naam}} heeft de volgende functies:
 <ul>
 {% for functie in afdeling.functies.all %}
     <li> <a href="/bestuursmodel/functie/{{functie.id}}"> {{ functie.naam }} </a>: {{ functie.beschrijving}} </li>
@@ -76,6 +77,7 @@ $(function() {
 </ul>
 
 <h2> Commissies van {{afdeling.naam}} </h2>
+De volgende afdelingen en commissies worden aangestuurd door {{afdeling.naam}}:
 <ul>
 {% for commissie in afdeling.commissies.all %}
     <li> <a href="/bestuursmodel/afdeling/{{commissie.id}}"> {{ commissie.naam }} </a> </li>
