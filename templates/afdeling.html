@@ -71,7 +71,7 @@ $(function() {
 <h2> Functies van {{afdeling.naam}} </h2>
 <ul>
 {% for functie in afdeling.functies.all %}
-    <li>{{ functie.naam }}</li>
+    <li> <a href="/bestuursmodel/functie/{{functie.id}}"> {{ functie.naam }} </a> </li>
      {{ functie.beschrijving}}
 {% endfor %}
 </ul>
