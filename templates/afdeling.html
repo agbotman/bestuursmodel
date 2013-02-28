@@ -1,67 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "bestuursmodel_base.html" %}
 
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width">
-<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
-<meta name="description" content="{% block meta_description %}{% endblock %}">
-<title></title>
+{% block left_panel %}
+<h3> Commissies en Afdelingen </h3>
+{% for afdeling in afdelingen%}
+<p> <a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a> </p>
+{% endfor %}
+{% endblock %}
 
-<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.responsive.css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/mezzanine.css">
-{% block extra_css %}{% endblock %}
-
-<script src="{{ STATIC_URL }}mezzanine/js/{{ settings.JQUERY_FILENAME }}"></script>
-<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
-<script>
-$(function() {
-    $('.middleinput:text, textarea').addClass('xlarge');
-    $('.control-group label').addClass('control-label');
-});
-</script>
-{% block extra_js %}{% endblock %}
-<!--[if lt IE 9]>
-<script src="{{ STATIC_URL }}js/html5shiv.js"></script>
-<![endif]-->
-
-{% block extra_head %}{% endblock %}
-
-</head>
-<body id="{% block body_id %}body{% endblock %}">
-
-<div class="navbar navbar-inverse">
-<div class="navbar-inner">
-<div class="container">
-    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </a>
-    <p class="brand">Bestuursmodel SVW'27</p>
-    <p class="tagline">Een elftal aan het roer</p>
-    <div class="nav-collapse">
-    </div>
-</div>
-</div>
-</div>
-
-
-<div class="container">
-<div class="row">
-
-<div class="span3 left">
-    {% block left_panel %}
-    <h3> Commissies en Afdelingen </h3>
-    {% for afdeling in afdelingen%}
-    <p> <a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a> </p>
-    {% endfor %}
-    {% endblock %}
-</div>
-
-<div class="span9 right">
-
+{% block main_block %}
 <h1> <a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a> </h1>
 {% if afdeling.rapporteert_aan %}
 <p> <b> Rapporteert aan: </b> <a href="/bestuursmodel/afdeling/{{afdeling.rapporteert_aan.id}}"> {{afdeling.rapporteert_aan}} </a> </p>
@@ -83,10 +29,4 @@ De volgende afdelingen en commissies worden aangestuurd door {{afdeling.naam}}:
     <li> <a href="/bestuursmodel/afdeling/{{commissie.id}}"> {{ commissie.naam }} </a> </li>
 {% endfor %}
 </ul>
-
-</div>
-
-</div>
-</div>
-
-
+{% endblock %}
