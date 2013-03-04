@@ -37,14 +37,6 @@ class Functie(models.Model):
     def __unicode__(self):
         return self.naam
 
-class AfdelingFunctie(models.Model):
-    afdeling = models.ForeignKey("Afdeling")
-    functie = models.ForeignKey("Functie")
-    beschrijving = models.TextField("Functiebeschrijving")
-
-    def __unicode__(self):
-        return "%s van %s" %(self.functie.naam, self.afdeling.naam)
-
 class Rol(models.Model):
     afdeling = models.ForeignKey("Afdeling")
     functie = models.ForeignKey("Functie")
