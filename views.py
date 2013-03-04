@@ -18,9 +18,8 @@ def functie(request, functieid=1):
     except:
         functie = Functie.objects.get(id=1)
     functies = Functie.objects.all()
-    afdelingfuncties = AfdelingFunctie.objects.filter(functie=functie)
     return render_to_response('functie.html',
                               {'functie': functie,
                                'functies': functies,
-                               'afdelingfuncties': afdelingfuncties},
+                               },
                               RequestContext(request))

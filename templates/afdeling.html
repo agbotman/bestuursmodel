@@ -14,11 +14,11 @@
 {% endif %}
 <p> <b> Taakbeschrijving: </b> {{afdeling.taakbeschrijving}} </p>
 
-<h3> Functies van {{afdeling.naam}} </h3>
-{{afdeling.naam}} heeft de volgende functies:
+<h3> Rollen van {{afdeling.naam}} </h3>
+{{afdeling.naam}} heeft de volgende rollen:
 <ul>
-{% for functie in afdeling.functies.all %}
-    <li> <a href="/bestuursmodel/functie/{{functie.id}}"> {{ functie.naam }} </a>: {{ functie.beschrijving}} </li>
+{% for rol in afdeling.rollen %}
+    <li> {{ rol.beschrijving }} wordt vervuld door <a href="/bestuursmodel/functie/{{functie.id}}"> {{ functie.naam }} 
 {% endfor %}
 </ul>
 

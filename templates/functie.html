@@ -11,19 +11,17 @@
 <h1> <a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a> </h1>
 <p> <b> Functiebeschrijving: </b> {{functie.beschrijving}} </p>
 
-<h3> Afdelingen en Commissies:</h3>
-{{functie.naam}} maakt deel uit van de volgende afdelingen en commissies:
+<h3> Rollen van {{functie.naam}}:</h3>
+{{functie.naam}} vervult de volgende rollen:
 <ul>
-{% for afdelingfunctie in afdelingfuncties %}
-    <li> <a href="/bestuursmodel/afdeling/{{afdelingfunctie.afdeling.id}}"> {{ afdelingfunctie.afdeling.naam }} </a> : {{ afdelingfunctie.beschrijving }} </li>
-{% endfor %}
-</ul>
-
-<h3> Taken</h3>
-{{functie.naam}} heeft de volgende taken:
-<ul>
-{% for taak in functie.taken.all %}
-    <li>{{ taak.beschrijving }}</li>
+{% for rol in functie.rollen %}
+    <li> <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a> : {{ rol.beschrijving }} </li>
+         Deze rol heeft de volgende taken:
+         <ul>
+         {% for taak in rol.taken.all %}
+               <li>{{ taak.beschrijving }}</li>
+         {% endfor %}
+         </ul>
 {% endfor %}
 </ul>
 
