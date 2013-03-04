@@ -42,6 +42,9 @@ class Rol(models.Model):
     functie = models.ForeignKey("Functie")
     beschrijving = models.TextField("Rolbeschrijving")
 
+    class Meta:
+        verbose_name_plural = "Rollen"
+
     def __unicode__(self):
         return "Rol van %s in %s" %(self.functie.naam, self.afdeling.naam)
 
