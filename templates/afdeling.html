@@ -17,7 +17,7 @@
 <h3> Rollen van {{afdeling.naam}} </h3>
 {{afdeling.naam}} heeft de volgende rollen:
 <ul>
-{% for rol in afdeling.rol_in_afdeling.all %}
+{% for rol in afdeling.rollen %}
     <li> {{ rol.beschrijving }} wordt vervuld door <a href="/bestuursmodel/functie/{{functie.id}}"> {{ functie.naam }} </a> 
 {% endfor %}
 </ul>
@@ -28,5 +28,5 @@ De volgende afdelingen en commissies worden aangestuurd door {{afdeling.naam}}:
 {% for commissie in afdeling.commissies.all %}
     <li> <a href="/bestuursmodel/afdeling/{{commissie.id}}"> {{ commissie.naam }} </a> </li>
 {% endfor %}
-</ul>
+</ul> 
 {% endblock %}

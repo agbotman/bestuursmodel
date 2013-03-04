@@ -39,9 +39,9 @@ class Functie(models.Model):
 
 class Rol(models.Model):
     afdeling = models.ForeignKey("Afdeling",
-                                 related_name="rol_in_afdeling")
+                                 related_name="rollen")
     functie = models.ForeignKey("Functie",
-                                related_name="rol_van_functie")
+                                related_name="rollen")
     beschrijving = models.TextField("Rolbeschrijving")
 
     class Meta:
