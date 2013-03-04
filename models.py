@@ -46,6 +46,14 @@ class AfdelingFunctie(models.Model):
     def __unicode__(self):
         return "%s van %s" %(self.functie.naam, self.afdeling.naam)
 
+class Rol(models.Model):
+    afdeling = models.ForeignKey("Afdeling")
+    functie = models.ForeignKey("Functie")
+    beschrijving = models.TextField("Rolbeschrijving")
+
+    def __unicode__(self):
+        return "Rol van %s in %s" %(self.functie.naam, self.afdeling.naam)
+
 
 class Taak(models.Model):
     naam = models.CharField(max_length=45, unique=True)
