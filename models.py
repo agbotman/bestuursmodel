@@ -8,7 +8,7 @@ class Afdeling(models.Model):
                                         related_name="commissies",
                                         blank=True, null=True)
     functies = models.ManyToManyField("Functie",
-                                      through="AfdelingFunctie")
+                                      through="Rol")
     sector = models.ForeignKey("Sector",
                                  related_name="functies",
                                blank=True, null=True)
@@ -26,9 +26,8 @@ class Afdeling(models.Model):
 class Functie(models.Model):
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("Functiebeschrijving")
-    taken = models.ManyToManyField("Taak",
-                                   related_name="functies",
-                                   blank=True, null=True)
+    afdelingen = models.ManyToManyField("Afdeling",
+                                      through="Rol")
     verantwoordelijkheden = models.ManyToManyField("Verantwoordelijkheid",
                                                   related_name="functies",
                                                    blank=True, null=True)
