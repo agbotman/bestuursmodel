@@ -18,7 +18,7 @@
 {{afdeling.naam}} heeft de volgende rollen:
 <ul>
 {% for rol in afdeling.rollen.all %}
-    <li> {{ rol.beschrijving }} wordt vervuld door <a href="/bestuursmodel/functie/{{functie.id}}"> {{ functie.naam }} </a> 
+    <li> {{ rol.beschrijving }} wordt vervuld door <a href="/bestuursmodel/functie/{{rol.functie.id}}"> {{ rol.functie.naam }} </a> 
 {% endfor %}
 </ul>
 
