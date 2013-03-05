@@ -11,25 +11,24 @@
 <h1> <a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a> </h1>
 <p> <b> Functiebeschrijving: </b> {{functie.beschrijving}} </p>
 
-<h3> Rollen van {{functie.naam}}:</h3>
+<h3> Rollen</h3>
 {{functie.naam}} vervult de volgende rollen:
-<ul>
 {% for rol in functie.rollen.all %}
-    <li> <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a> : {{ rol.beschrijving }} </li>
-         Deze afdeling heeft de volgende generieke taken:
+    <h4> <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a> : {{ rol.beschrijving }} </h4>
+         {{ rol.afdeling.naam }}  heeft de volgende generieke taken:
          <ul>
          {% for taak in rol.afdeling.taken.all %}
                <li>{{ taak.beschrijving }}</li>
          {% endfor %}
          </ul>
-         Deze rol heeft de volgende specifieke taken:
+         {{ rol.beschrijving }}  heeft de volgende specifieke taken:
          <ul>
          {% for taak in rol.taken.all %}
                <li>{{ taak.beschrijving }}</li>
          {% endfor %}
          </ul>
 {% endfor %}
-</ul>
+
 
 <h2> Verantwoordelijkheden</h2>
 {{functie.naam}} heeft de volgende verantwoordelijkheden:
