@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 class Afdeling(models.Model):
     nummer = models.PositiveIntegerField(unique=True)
@@ -53,10 +55,16 @@ class Rol(models.Model):
 
 class Taak(models.Model):
     """
-    Taken worden toegekend aan een rol
+    Taken worden kunnen worden toegekend aan een rol of een afdeling
     """
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("Taakbeschrijving")
+    rol = models.ForeignKey(Rol,
+                            related_name="taken",
+                            blank=True, null=True)
+    afdeling = models.ForeignKey(Afdeling,
+                                 related_name='taken',
+                                 blank=True, null=True)
 
     class Meta:
         ordering = ["naam"]
