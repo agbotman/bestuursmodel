@@ -14,9 +14,15 @@
 <h3> Rollen van {{functie.naam}}:</h3>
 {{functie.naam}} vervult de volgende rollen:
 <ul>
-{% for rol in functie.rollen %}
+{% for rol in functie.rollen.all %}
     <li> <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a> : {{ rol.beschrijving }} </li>
-         Deze rol heeft de volgende taken:
+         Deze afdeling heeft de volgende generieke taken:
+         <ul>
+         {% for taak in rol.afdeling.taken.all %}
+               <li>{{ taak.beschrijving }}</li>
+         {% endfor %}
+         </ul>
+         Deze rol heeft de volgende specifieke taken:
          <ul>
          {% for taak in rol.taken.all %}
                <li>{{ taak.beschrijving }}</li>
