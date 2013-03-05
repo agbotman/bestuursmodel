@@ -52,10 +52,11 @@ class Rol(models.Model):
 
 
 class Taak(models.Model):
+    """
+    Taken worden toegekend aan een rol
+    """
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("Taakbeschrijving")
-    rol = models.ForeignKey("Taak",
-                            blank=True, null=True)
 
     class Meta:
         ordering = ["naam"]
