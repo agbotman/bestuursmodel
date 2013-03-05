@@ -17,9 +17,11 @@
 <h3> Functies en Rollen van {{afdeling.naam}} </h3>
 <table class="table table-bordered">
 <tr>
+<thead>
 <th>Functie</th>
 <th>Rol</th>
 </tr>
+</thead>
 {% for rol in afdeling.rollen.all %}
 <tr>
 <td><a href="/bestuursmodel/functie/{{rol.functie.id}}"> {{ rol.functie.naam }} </a></td>
