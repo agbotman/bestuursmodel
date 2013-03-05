@@ -14,13 +14,19 @@
 {% endif %}
 <p> <b> Taakbeschrijving: </b> {{afdeling.taakbeschrijving}} </p>
 
-<h3> Rollen van {{afdeling.naam}} </h3>
-{{afdeling.naam}} heeft de volgende rollen:
-<ul>
+<h3> Functies en Rollen van {{afdeling.naam}} </h3>
+<table>
+<tr>
+<th>Functie</th>
+<th>Rol</th>
+</tr>
 {% for rol in afdeling.rollen.all %}
-    <li> {{ rol.beschrijving }} wordt vervuld door <a href="/bestuursmodel/functie/{{rol.functie.id}}"> {{ rol.functie.naam }} </a> 
+<tr>
+<td><a href="/bestuursmodel/functie/{{rol.functie.id}}"> {{ rol.functie.naam }} </a></td>
+<td>{{ rol.beschrijving }}</td>
+</tr>
 {% endfor %}
-</ul>
+</table>
 
 <h3> Afdelingen en Commissies van {{afdeling.naam}} </h3>
 De volgende afdelingen en commissies worden aangestuurd door {{afdeling.naam}}:
