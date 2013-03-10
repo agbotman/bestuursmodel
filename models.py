@@ -39,15 +39,36 @@ class Functie(models.Model):
     def __unicode__(self):
         return self.naam
 
+class RolGeneriek(models.Model):
+    naam = models.CharField(max_length=45, unique=True)
+    beschrijving = models.TextField("beschrijving",
+                                    blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "Generieke Rollen"
+    
+    def __unicode__(self):
+        return self.naam
+
+
 class Rol(models.Model):
     afdeling = models.ForeignKey("Afdeling",
                                  related_name="rollen")
     functie = models.ForeignKey("Functie",
                                 related_name="rollen")
-    beschrijving = models.TextField("Rolbeschrijving")
+    generieke_rol = models.ForeignKey("RolGeneriek",
+                                      blank=True, null=True)
+    beschrijving = models.TextField("beschrijving", default= ' ',
+                                    blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Rollen"
+
+    def beschrijving1(self):
+        out1 = ''
+        if self.generieke_rol:
+            out1 = self.generieke_rol.beschrijving  %(self.afdeling)   
+        return ' '.join([out1, self.beschrijving])
 
     def __unicode__(self):
         return "Rol van %s in %s" %(self.functie.naam, self.afdeling.naam)
@@ -75,8 +96,17 @@ class Taak(models.Model):
 
 
 class Verantwoordelijkheid(models.Model):
+    """
+    Verantwoordelijkheden worden kunnen worden toegekend aan een rol of een afdeling
+    """
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("beschrijving")
+    rol = models.ForeignKey(Rol,
+                            related_name="verantwoordelijkheden",
+                            blank=True, null=True)
+    afdeling = models.ForeignKey(Afdeling,
+                                 related_name='verantwoordelijkheden',
+                                 blank=True, null=True)
 
     class Meta:
         ordering = ["naam"]

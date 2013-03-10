@@ -12,37 +12,23 @@
 <p> <b> Functiebeschrijving: </b> {{functie.beschrijving}} </p>
 
 <h3> Rollen</h3>
-{{functie.naam}} vervult de volgende rollen:
+
 {% for rol in functie.rollen.all %}
-    <h4> <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a> : {{ rol.beschrijving }} </h4>
-         {{ rol.afdeling.naam }}  heeft de volgende generieke taken:
-         <ul>
-         {% for taak in rol.afdeling.taken.all %}
-               <li>{{ taak.beschrijving }}</li>
-         {% endfor %}
-         </ul>
-         {{ rol.beschrijving }}  heeft de volgende specifieke taken:
-         <ul>
-         {% for taak in rol.taken.all %}
-               <li>{{ taak.beschrijving }}</li>
-         {% endfor %}
-         </ul>
-{% endfor %}
+    <strong> Rol: </strong> {{ rol.beschrijving1 }}<br>
+    <strong> Afdeling: </strong> <a href="/bestuursmodel/functie/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a><br>
+    <strong> Taken </strong>:
+    {% for taak in rol.taken.all %}
+        <ul>
+             <li> {{ taak.beschrijving }} </li>
+        </ul>
+    {% endfor %}
+    <strong> Verantwoordelijkheden: </strong>
+    {% for verantwoordelijkheid in rol.verantwoordelijkheden.all %}
+        <ul>
+             <li> {{ verantwoordelijkheid.beschrijving }} </li>
+        </ul>
+    {% endfor %}
 
-
-<h2> Verantwoordelijkheden</h2>
-{{functie.naam}} heeft de volgende verantwoordelijkheden:
-<ul>
-{% for verantwoordelijkheid in functie.verantwoordelijkheden.all %}
-    <li>{{ verantwoordelijkheid.beschrijving }}</li>
 {% endfor %}
-</ul>
-
-<h3> Functie-eisen</h3>
-De volgende functie-eisen worden er gesteld aan {{functie.naam}}:
-<ul>
-{% for functieeis in functie.functie_eisen.all %}
-    <li>{{ functieeis.beschrijving }}</li>
-{% endfor %}
-</ul>
+<h3> Functie eisen</h3>
 {% endblock %}
