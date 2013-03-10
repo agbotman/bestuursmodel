@@ -14,20 +14,18 @@
 <h3> Rollen</h3>
 
 {% for rol in functie.rollen.all %}
-    <strong> Rol: </strong> {{ rol.beschrijving1 }}<br>
-    <strong> Afdeling: </strong> <a href="/bestuursmodel/functie/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a><br>
-    <strong> Taken </strong>:
-    {% for taak in rol.taken.all %}
-        <ul>
-             <li> {{ taak.beschrijving }} </li>
-        </ul>
-    {% endfor %}
-    <strong> Verantwoordelijkheden: </strong>
-    {% for verantwoordelijkheid in rol.verantwoordelijkheden.all %}
-        <ul>
-             <li> {{ verantwoordelijkheid.beschrijving }} </li>
-        </ul>
-    {% endfor %}
+    <h4> <i class="icon-star"> </i> {{ rol.beschrijving1 }}</h4>
+    <div class="offset1">
+        <strong> Afdeling: </strong> <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a><br>
+        <strong> Taken </strong>:<br>
+        {% for taak in rol.taken.all %}
+            <i class="icon-hand-right"> </i> {{ taak.beschrijving }} <br>
+        {% endfor %}
+        <strong> Verantwoordelijkheden: </strong>
+        {% for verantwoordelijkheid in rol.verantwoordelijkheden.all %}
+             <i class="icon-hand-right">  </i> {{ verantwoordelijkheid.beschrijving }} <br>
+        {% endfor %}
+    </div>
 
 {% endfor %}
 <h3> Functie eisen</h3>
