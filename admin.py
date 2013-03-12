@@ -16,15 +16,6 @@ class FunctieAdmin(admin.ModelAdmin):
         FunctieEisInline,
     ]
 
-# class TaakInline(admin.TabularInline):
-#     model = Taak
-
-# class RolAdmin(admin.ModelAdmin):
-#     inlines = [
-#         TaakInline,
-#    ]
-
-
 class RolForm(ModelForm):
     class Meta:
         model = Rol
@@ -56,3 +47,4 @@ admin.site.register(Sector)
 admin.site.register(FunctieEis)
 admin.site.register(Rol, RolAdmin)
 admin.site.register(RolGeneriek)
+admin.site.register(TaakGeneriek)
