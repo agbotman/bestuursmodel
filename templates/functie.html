@@ -19,7 +19,7 @@
         <strong> Afdeling: </strong> <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a><br>
         <strong> Taken </strong>:<br>
         {% for taak in rol.taken.all %}
-            <i class="icon-hand-right"> </i> {{ taak.beschrijving }} <br>
+            <i class="icon-hand-right"> </i> {{ taak.beschrijving1 }} <br>
         {% endfor %}
         <strong> Verantwoordelijkheden: </strong>
         {% for verantwoordelijkheid in rol.verantwoordelijkheden.all %}

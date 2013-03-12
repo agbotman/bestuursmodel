@@ -91,6 +91,13 @@ class Taak(models.Model):
         ordering = ["naam"]
         verbose_name_plural = "Taken"
 
+    def beschrijving1(self):
+        try:
+            out = self.beschrijving %(self.afdeling)
+        except:
+            out = self.beschrijving
+        return out
+
     def __unicode__(self):
         return self.naam
 
