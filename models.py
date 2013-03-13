@@ -91,13 +91,11 @@ class Taak(models.Model):
     Taken worden kunnen worden toegekend aan een rol of een afdeling
     """
     naam = models.CharField(max_length=45, unique=True)
-    beschrijving = models.TextField("Taakbeschrijving")
+    beschrijving = models.TextField("Taakbeschrijving",
+                                    blank=True, null=True)
     rol = models.ForeignKey(Rol,
                             related_name="taken",
                             blank=True, null=True)
-    afdeling = models.ForeignKey(Afdeling,
-                                 related_name='taken',
-                                 blank=True, null=True)
     generieke_taak = models.ForeignKey("TaakGeneriek",
                                       blank=True, null=True)
 

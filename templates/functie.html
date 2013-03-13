@@ -18,6 +18,9 @@
     <div class="offset1">
         <strong> Afdeling: </strong> <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a><br>
         <strong> Taken </strong>:<br>
+        {% for taak in rol.afdeling.taken.all %}
+            <i class="icon-hand-right"> </i> {{ taak.beschrijving1 }} <br>
+        {% endfor %}
         {% for taak in rol.taken.all %}
             <i class="icon-hand-right"> </i> {{ taak.beschrijving1 }} <br>
         {% endfor %}
