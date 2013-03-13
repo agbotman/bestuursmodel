@@ -81,9 +81,8 @@ class Taak(models.Model):
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("Taakbeschrijving",
                                     blank=True, null=True)
-    rol = models.ForeignKey(Rol,
-                            related_name="taken",
-                            blank=True, null=True)
+    rollen = models.ManyToManyField("Rol",
+                            related_name="taken")
 
     class Meta:
         ordering = ["naam"]

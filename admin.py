@@ -28,9 +28,6 @@ class RolForm(ModelForm):
             self.fields['taken'].initial = self.instance.taken.all()
 
     def save(self, *args, **kwargs):
-        # FIXME: 'commit' argument is not handled
-        # TODO: Wrap reassignments into transaction
-        # NOTE: Previously assigned Foos are silently reset
         instance = super(RolForm, self).save(commit=False)
         self.fields['taken'].initial.update(rol=None)
         self.cleaned_data['taken'].update(rol=instance)
@@ -39,8 +36,28 @@ class RolForm(ModelForm):
 class RolAdmin(admin.ModelAdmin):
     form = RolForm
 
+class TaakForm(ModelForm):
+    class Meta:
+        model = Taak
+
+    rollen = ModelMultipleChoiceField(queryset=Rol.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        super(TaakForm, self).__init__(*args, **kwargs)
+        if self.instance:
+            self.fields['rollen'].initial = self.instance.rollen.all()
+
+    def save(self, *args, **kwargs):
+        instance = super(TaakForm, self).save(commit=False)
+        self.fields['rollen'].initial.update(taak=None)
+        self.cleaned_data['rollen'].update(taak=instance)
+        return instance
+
+class TaakAdmin(admin.ModelAdmin):
+    form = TaakForm
+
 admin.site.register(Afdeling, AfdelingAdmin)
-admin.site.register(Taak)
+admin.site.register(Taak, TaakAdmin)
 admin.site.register(Verantwoordelijkheid)
 admin.site.register(Functie, FunctieAdmin)
 admin.site.register(Sector)
