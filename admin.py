@@ -16,13 +16,13 @@ class FunctieAdmin(admin.ModelAdmin):
         FunctieEisInline,
     ]
     
-class RolInline(admin.TabularInline):
-    model = Rol.taken.through
+#class RolInline(admin.TabularInline):
+#    model = Rol.taken.through
 
-class TaakAdmin(admin.ModelAdmin):
-    inlines = [
-        RolInline,
-    ]
+#class TaakAdmin(admin.ModelAdmin):
+#    inlines = [
+#        RolInline,
+#    ]
     
 class TaakInline(admin.TabularInline):
     model = Taak.rollen.through
@@ -55,7 +55,7 @@ class RolAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Afdeling, AfdelingAdmin)
-admin.site.register(Taak, TaakAdmin)
+admin.site.register(Taak)
 admin.site.register(Verantwoordelijkheid)
 admin.site.register(Functie, FunctieAdmin)
 admin.site.register(Sector)
