@@ -74,18 +74,6 @@ class Rol(models.Model):
         return "Rol van %s in %s" %(self.functie.naam, self.afdeling.naam)
 
 
-class TaakGeneriek(models.Model):
-    naam = models.CharField(max_length=45, unique=True)
-    beschrijving = models.TextField("beschrijving",
-                                    blank=True, null=True)
-
-    class Meta:
-        verbose_name_plural = "Generieke Taken"
-    
-    def __unicode__(self):
-        return self.naam
-
-
 class Taak(models.Model):
     """
     Taken worden kunnen worden toegekend aan een rol of een afdeling
@@ -96,18 +84,13 @@ class Taak(models.Model):
     rol = models.ForeignKey(Rol,
                             related_name="taken",
                             blank=True, null=True)
-    generieke_taak = models.ForeignKey("TaakGeneriek",
-                                      blank=True, null=True)
 
     class Meta:
         ordering = ["naam"]
         verbose_name_plural = "Taken"
 
     def beschrijving1(self):
-        out1 = ''
-        if self.generieke_taak:
-            out1 = self.generieke_taak.beschrijving  %(self.afdeling)   
-        return ' '.join([out1, self.beschrijving])
+        return self.beschrijving  %(self.rol.afdeling)
 
     def __unicode__(self):
         return self.naam
