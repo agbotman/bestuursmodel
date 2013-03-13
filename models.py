@@ -76,7 +76,7 @@ class Rol(models.Model):
 
 class Taak(models.Model):
     """
-    Taken worden kunnen worden toegekend aan een rol of een afdeling
+    Taken worden kunnen worden toegekend aan meerdere rollen
     """
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("Taakbeschrijving",
@@ -87,9 +87,6 @@ class Taak(models.Model):
     class Meta:
         ordering = ["naam"]
         verbose_name_plural = "Taken"
-
-    def beschrijving1(self):
-        return self.beschrijving  %(self.rol.afdeling)
 
     def __unicode__(self):
         return self.naam
