@@ -8,11 +8,41 @@
 {% endblock %}
 
 {% block main_block %}
-<h1> <a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a> </h1>
+
+<h1> {{afdeling.naam}} </h1>
+
+<div class="accordion" id="accordionTaakbeschrijving">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTaakbeschrijving" href="#collapseTaakbeschrijving">
+        <h4> Taakbeschrijving</h4>
+      </a>
+    </div>
+    <div id="collapseTaakbeschrijving" class="accordion-body collapse">
+      <div class="accordion-inner">
+        {{afdeling.taakbeschrijving}} 
+      </div>
+    </div>
+  </div>
+</div>
+
 {% if afdeling.rapporteert_aan %}
-<p> <b> Rapporteert aan: </b> <a href="/bestuursmodel/afdeling/{{afdeling.rapporteert_aan.id}}"> {{afdeling.rapporteert_aan}} </a> </p>
+<div class="accordion" id="accordionRapporteert">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionRapporteert" href="#collapseRapporteert">
+        <h4> Rapporteert aan</h4>
+      </a>
+    </div>
+    <div id="collapseRapporteert" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <a href="/bestuursmodel/afdeling/{{afdeling.rapporteert_aan.id}}"> {{afdeling.rapporteert_aan}} </a> 
+      </div>
+    </div>
+  </div>
+</div>
 {% endif %}
-<p> <b> Taakbeschrijving: </b> {{afdeling.taakbeschrijving}} </p>
+
 
 <div class="accordion" id="accordionAfdelingen">
   <div class="accordion-group">
@@ -33,6 +63,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="accordion" id="accordionFuncties">
   <div class="accordion-group">
     <div class="accordion-heading">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionFuncties" href="#collapseFuncties">
@@ -61,4 +94,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}
