@@ -8,25 +8,110 @@
 {% endblock %}
 
 {% block main_block %}
-<h1> <a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a> </h1>
-<p> <b> Functiebeschrijving: </b> {{functie.beschrijving}} </p>
+<h1> {{functie.naam}} </h1>
 
-<h3> Rollen</h3>
-
-{% for rol in functie.rollen.all %}
-    <h4> <i class="icon-star"> </i> {{ rol.beschrijving1 }}</h4>
-    <div class="offset1">
-        <strong> Afdeling: </strong> <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{ rol.afdeling.naam }} </a><br>
-        <strong> Taken </strong>:<br>
-        {% for taak in rol.taken.all %}
-            <i class="icon-hand-right"> </i> {{ taak.beschrijving }} <br>
-        {% endfor %}
-        <strong> Verantwoordelijkheden: </strong>
-        {% for verantwoordelijkheid in rol.verantwoordelijkheden.all %}
-             <i class="icon-hand-right">  </i> {{ verantwoordelijkheid.beschrijving }} <br>
-        {% endfor %}
+<div class="accordion" id="accordionFunctiebeschrijving">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionFunctiebeschrijving" href="#collapseFunctiebeschrijving">
+        <h4> Functiebeschrijving</h4>
+      </a>
     </div>
+    <div id="collapseFunctiebeschrijving" class="accordion-body collapse">
+      <div class="accordion-inner">
+        {{functie.beschrijving}} 
+      </div>
+    </div>
+  </div>
+</div>
 
-{% endfor %}
-<h3> Functie eisen</h3>
+<div class="accordion" id="accordionRollen">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionRollen" href="#collapseRollen">
+        <h4> Rollen</h4>
+      </a>
+    </div>
+    <div id="collapseRollen" class="accordion-body collapse">
+      <div class="accordion-inner">
+        {% for rol in functie.rollen.all %}
+
+            <div class="accordion" id="accordionRol{{forloop.counter}}">
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionRol{{forloop.counter}}" href="#collapseRol{{forloop.counter}}">
+                    <h4> {{ rol.beschrijving1 }}</h4>
+                  </a>
+                </div>
+                <div id="collapseRol{{forloop.counter}}" class="accordion-body collapse">
+                  <div class="accordion-inner">
+
+                    <div class="accordion" id="accordionTaken{{forloop.counter}}">
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTaken{{forloop.counter}}" href="#collapseTaken{{forloop.counter}}">
+                            <h4> Taken</h4>
+                          </a>
+                        </div>
+                        <div id="collapseTaken{{forloop.counter}}" class="accordion-body collapse">
+                          <div class="accordion-inner">
+                                {% for taak in rol.taken.all %}
+                                  <i class="icon-hand-right"> </i> {{ taak.beschrijving }} <br>
+                                {% empty %}
+                                  Geen taken
+                                {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="accordion" id="accordionVerantwoordelijkheden{{forloop.counter}}">
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionVerantwoordelijkheden{{forloop.counter}}" href="#collapseVerantwoordelijkheden{{forloop.counter}}">
+                            <h4> Verantwoordelijkheden</h4>
+                          </a>
+                        </div>
+                        <div id="collapseVerantwoordelijkheden{{forloop.counter}}" class="accordion-body collapse">
+                          <div class="accordion-inner">
+                                {% for verantwoordelijkheid in rol.verantwoordelijkheden.all %}
+                                  <i class="icon-hand-right"> </i> {{ verantwoordelijkheid.beschrijving }} <br>
+                                {% empty %}
+                                  Geen verantwoordelijkheden
+                                {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="accordion" id="accordionFunctieEisen">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionFunctieEisen" href="#collapseFunctieEisen">
+        <h4> Functie Eisen</h4>
+      </a>
+    </div>
+    <div id="collapseFunctieEisen" class="accordion-body collapse">
+      <div class="accordion-inner">
+         {% for functieeis in functie.functie_eisen.all %}
+           <i class="icon-hand-right"> </i> {{ functieeis.beschrijving }} <br>
+         {% empty %}
+           Geen functie eisen
+         {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
