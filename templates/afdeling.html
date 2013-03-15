@@ -14,27 +14,51 @@
 {% endif %}
 <p> <b> Taakbeschrijving: </b> {{afdeling.taakbeschrijving}} </p>
 
-<h3> Functies en Rollen van {{afdeling.naam}} </h3>
-<table class="table table-bordered table-condensed">
-<tr>
-<thead>
-<th>Functie</th>
-<th>Rol</th>
-</tr>
-</thead>
-{% for rol in afdeling.rollen.all %}
-<tr>
-<td><a href="/bestuursmodel/functie/{{rol.functie.id}}"> {{ rol.functie.naam }} </a></td>
-<td>{{ rol.beschrijving }}</td>
-</tr>
-{% endfor %}
-</table>
-
-<h3> Afdelingen en Commissies van {{afdeling.naam}} </h3>
-De volgende afdelingen en commissies worden aangestuurd door {{afdeling.naam}}:
-<ul>
-{% for commissie in afdeling.commissies.all %}
-    <li> <a href="/bestuursmodel/afdeling/{{commissie.id}}"> {{ commissie.naam }} </a> </li>
-{% endfor %}
-</ul> 
+<div class="accordion" id="accordionAfdelingen">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionAfdelingen" href="#collapseAfdelingen">
+        <h4> Afdelingen en Commissies van {{afdeling.naam}} </h4>
+      </a>
+    </div>
+    <div id="collapseAfdelingen" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+          {% for commissie in afdeling.commissies.all %}
+            <li> <a href="/bestuursmodel/afdeling/{{commissie.id}}"> {{ commissie.naam }} </a> </li>
+          {% empty %}
+            Geen afdelingen of commissies
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionFuncties" href="#collapseFuncties">
+        <h4> Functies en Rollen van {{afdeling.naam}} </h4>
+      </a>
+    </div>
+    <div id="collapseFuncties" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <table class="table table-bordered table-condensed">
+          <tr>
+            <thead>
+              <th>Functie</th>
+              <th>Rol</th>
+            </thead>
+          </tr>
+          {% for rol in afdeling.rollen.all %}
+            <tr>
+              <td><a href="/bestuursmodel/functie/{{rol.functie.id}}"> {{ rol.functie.naam }} </a></td>
+              <td>{{ rol.beschrijving }}</td>
+            </tr>
+          {% empty %}
+            Geen functies
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
