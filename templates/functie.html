@@ -48,7 +48,7 @@
             </button>
             <div id="Taken{{forloop.counter}}" class="collapse">
               {% for taak in rol.taken.all %}
-                <i class="icon-hand-right"> </i> {{ taak.beschrijving }}
+                <i class="icon-hand-right"> </i> {{ taak.beschrijving }}<br>
               {% empty %}
                 <i class="icon-hand-right"> </i> Geen taken
               {% endfor %}
