@@ -8,7 +8,8 @@
 {% endblock %}
 
 {% block main_block %}
-<h1> {{functie.naam}} </h1>
+{% load mezzanine_tags %}
+<h1> {% editable functie.naam %}{% endeditable %} </h1>
 
 <div class="accordion" id="accordionFunctiebeschrijving">
   <div class="accordion-group">
@@ -19,7 +20,7 @@
     </div>
     <div id="collapseFunctiebeschrijving" class="accordion-body collapse in">
       <div class="accordion-inner">
-        {{functie.beschrijving}} 
+        {% editable functie.beschrijving %}{% endeditable %}
       </div>
     </div>
   </div>
@@ -81,7 +82,7 @@
     <div id="collapseFunctieEisen" class="accordion-body collapse">
       <div class="accordion-inner">
          {% for functieeis in functie.functie_eisen.all %}
-           <i class="icon-hand-right"> </i> {{ functieeis.beschrijving }} <br>
+           <i class="icon-hand-right"> </i> {% editable functieeis.beschrijving %}{% endeditable %} <br>
          {% empty %}
            Geen functie eisen
          {% endfor %}
