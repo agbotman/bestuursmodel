@@ -44,7 +44,9 @@
 </div>
 {% endif %}
 
-
+{% if user.is_staff %}
+  <a href="/admin/bestuursmodel/afdeling/add?rapporteert_aan={{afdeling.id}}" onclick="window.open (this.href, 'child', 'height=600,width=800'); return false"> <i class="icon-plus-sign "> </i> </a> 
+{% endif %}
 <div class="accordion" id="accordionAfdelingen">
   <div class="accordion-group">
     <div class="accordion-heading">

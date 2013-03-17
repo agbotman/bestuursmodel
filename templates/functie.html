@@ -26,6 +26,9 @@
   </div>
 </div>
 
+{% if user.is_staff %}
+  <a href="/admin/bestuursmodel/rol/add?functie={{functie.id}}" onclick="window.open (this.href, 'child', 'height=600,width=800,scrollbars'); return false"> <i class="icon-plus-sign "> </i> </a> 
+{% endif %}
 <div class="accordion" id="accordionRollen">
   <div class="accordion-group">
     <div class="accordion-heading">
@@ -37,8 +40,11 @@
       <div class="accordion-inner">
         {% for rol in functie.rollen.all %}
 
+          {% if user.is_staff %}
+            <a href="/admin/bestuursmodel/rol/{{rol.id}}" onclick="window.open (this.href, 'child', 'height=600,width=800'); return false"> <i class="icon-edit"> </i> </a> 
+          {% endif %}
           <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#Rol{{forloop.counter}}">
-            <b> <i class="icon-plus-sign"> </i> {{ rol.beschrijving1 }} </b>
+          <b> {{ rol.beschrijving1 }} </b>
           </button>
           afdeling <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{rol.afdeling.naam}} </a> 
           <div id="Rol{{forloop.counter}}" class="collapse offset1">

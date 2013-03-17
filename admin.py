@@ -36,20 +36,20 @@ class RolAdmin(admin.ModelAdmin):
 #class RolForm(ModelForm):
 #    class Meta:
 #        model = Rol
-#
+
 #    taken = ModelMultipleChoiceField(queryset=Taak.objects.all())
-#
+
 #    def __init__(self, *args, **kwargs):
 #        super(RolForm, self).__init__(*args, **kwargs)
 #        if self.instance:
 #            self.fields['taken'].initial = self.instance.taken.all()
-#
+
 #    def save(self, *args, **kwargs):
 #        instance = super(RolForm, self).save(commit=False)
 #        self.fields['taken'].initial.update(rol=None)
 #        self.cleaned_data['taken'].update(rol=instance)
 #        return instance
-#
+
 #class RolAdmin(admin.ModelAdmin):
 #    form = RolForm
 

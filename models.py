@@ -82,7 +82,8 @@ class Taak(models.Model):
     beschrijving = models.TextField("Taakbeschrijving",
                                     blank=True, null=True)
     rollen = models.ManyToManyField("Rol",
-                            related_name="taken")
+                                    related_name="taken",
+                                    blank=True, null=True)
 
     class Meta:
         ordering = ["naam"]
