@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block main_block %}
+{% load mezzanine_tags %}
 
 <h1> {{afdeling.naam}} </h1>
 
@@ -18,9 +19,9 @@
         <h4> Taakbeschrijving</h4>
       </a>
     </div>
-    <div id="collapseTaakbeschrijving" class="accordion-body collapse">
+    <div id="collapseTaakbeschrijving" class="accordion-body collapse in">
       <div class="accordion-inner">
-        {{afdeling.taakbeschrijving}} 
+        {% editable afdeling.taakbeschrijving %}{% endeditable %}
       </div>
     </div>
   </div>
