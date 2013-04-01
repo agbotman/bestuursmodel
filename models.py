@@ -28,11 +28,7 @@ class Afdeling(models.Model):
 class Functie(models.Model):
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("Functiebeschrijving")
-    afdelingen = models.ManyToManyField("Afdeling",
-                                      through="Rol")
-    verantwoordelijkheden = models.ManyToManyField("Verantwoordelijkheid",
-                                                  related_name="functies",
-                                                   blank=True, null=True)
+
     class Meta:
         ordering = ["naam"]
 
@@ -118,7 +114,8 @@ class FunctieEis(models.Model):
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("beschrijving")
     functies = models.ManyToManyField("Functie",
-                                      related_name="functie_eisen")
+                                      related_name="functie_eisen",
+                                      verbose_name="Functie eisen")
     class Meta:
         ordering = ["naam"]
         verbose_name_plural = "Functie-eisen"

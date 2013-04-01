@@ -1,19 +1,32 @@
 from django.contrib import admin
 from .models import *
-from django.forms import Textarea, ModelForm, ModelMultipleChoiceField
+from django.forms import Textarea, SelectMultiple, ModelForm, ModelMultipleChoiceField
 
 class AfdelingAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':40})},
     }
 
+class RolInline(admin.TabularInline):
+    model = Rol
+    extra = 1
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':1, 'cols':40})},
+    }
+
 class FunctieEisInline(admin.TabularInline):
     model = FunctieEis.functies.through
-
+    extra = 1
+    verbose_name = "Functie eis"
+    verbose_name_plural = "Functie eisen voor deze functie"
 
 class FunctieAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':40})},
+    }
     inlines = [
         FunctieEisInline,
+        RolInline
     ]
     
 #class RolInline(admin.TabularInline):

@@ -6,4 +6,5 @@ urlpatterns = patterns('bestuursmodel.views',
     (r'^bestuursmodel/afdeling/(\w+)/$', 'afdeling'),
     (r'^bestuursmodel/functie/$', 'functie'),
     (r'^bestuursmodel/functie/(\w+)/$', 'functie'),
+    (r'^bestuursmodel/add/functie/?$', 'newFunctie'), 
 )

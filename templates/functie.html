@@ -10,6 +10,13 @@
 {% block main_block %}
 {% load mezzanine_tags %}
 <h1> {% editable functie.naam %}{% endeditable %} </h1>
+{% if user.is_staff %}
+
+    <a href="/bestuursmodel/add/functie?next={{request.path}}">
+      <i class="icon-plus-sign "> </i> 
+    </a>
+{% endif %}
+
 
 <div class="accordion" id="accordionFunctiebeschrijving">
   <div class="accordion-group">
@@ -41,7 +48,7 @@
         {% for rol in functie.rollen.all %}
 
           {% if user.is_staff %}
-            <a href="/admin/bestuursmodel/rol/{{rol.id}}" onclick="window.open (this.href, 'child', 'height=600,width=800'); return false"> <i class="icon-edit"> </i> </a> 
+            <a href="/admin/bestuursmodel/rol/{{rol.id}}" onclick="window.open (this.href, 'child', 'height=600,width=800,scrollbars'); return false"> <i class="icon-edit"> </i> </a> 
           {% endif %}
           <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#Rol{{forloop.counter}}">
           <b> {{ rol.beschrijving1 }} </b>
@@ -77,6 +84,7 @@
     </div>
   </div>
 </div>
+
 
 <div class="accordion" id="accordionFunctieEisen">
   <div class="accordion-group">

@@ -1,6 +1,7 @@
 from .models import *
 from django.forms import ModelForm
 
-class FunctieEisForm(ModelForm):
+class FunctieForm(ModelForm):
     class Meta:
-        model = FunctieEis
+        model = Functie
+        exclude = ('afdelingen',)

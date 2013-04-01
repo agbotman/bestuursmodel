@@ -1,0 +1,20 @@
+{% extends "bestuursmodel_base.html" %}
+
+{% block main_block %}
+<html>
+    <head>
+        <title>Toevoegen {{ field }}</title>
+    </head>
+    <body>
+        <h1>Toevoegen {{ field }}</h1>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <table>
+                {{ form }}
+            </table>
+            <p><input type="submit" value="Toevoegen"></p>
+        </form>
+        <a href={{ redirect_to }}> Afbreken </a>
+    </body>
+</html>
+{% endblock %}
