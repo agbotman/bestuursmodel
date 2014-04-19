@@ -1,14 +1,13 @@
 from django.db import models
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
+from mptt.models import MPTTModel, TreeForeignKey
 
-class Afdeling(models.Model):
+class Afdeling(MPTTModel):
     nummer = models.PositiveIntegerField(unique=True)
     naam = models.CharField(max_length=45, unique=True)
     taakbeschrijving = models.TextField("Taakbeschrijving")
-    rapporteert_aan = models.ForeignKey("Afdeling",
-                                        related_name="commissies",
-                                        blank=True, null=True)
+    rapporteert_aan = TreeForeignKey("Afdeling",
+                                      related_name="commissies",
+                                      blank=True, null=True)
     functies = models.ManyToManyField("Functie",
                                       through="Rol")
     sector = models.ForeignKey("Sector",
@@ -18,8 +17,11 @@ class Afdeling(models.Model):
     startdatum = models.DateField(blank=True, null=True)
     einddatum = models.DateField(blank=True, null=True)
 
+    class MPTTMeta:
+        parent_attr = "rapporteert_aan"
+        order_insertion_by = ["nummer"]
+
     class Meta:
-        ordering = ["nummer"]
         verbose_name_plural = "Afdelingen"
 
     def __unicode__(self):

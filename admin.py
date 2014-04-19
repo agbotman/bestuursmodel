@@ -1,11 +1,12 @@
 from django.contrib import admin
+from mptt.admin import MPTTModelAdmin
 from .models import *
 from django.forms import Textarea, SelectMultiple, ModelForm, ModelMultipleChoiceField
 
-class AfdelingAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':40})},
-    }
+#class AfdelingAdmin(admin.ModelAdmin):
+#    formfield_overrides = {
+#        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':40})},
+#    }
 
 class RolInline(admin.TabularInline):
     model = Rol
@@ -67,7 +68,7 @@ class RolAdmin(admin.ModelAdmin):
 #    form = RolForm
 
 
-admin.site.register(Afdeling, AfdelingAdmin)
+admin.site.register(Afdeling, MPTTModelAdmin)
 admin.site.register(Taak)
 admin.site.register(Verantwoordelijkheid)
 admin.site.register(Functie, FunctieAdmin)
