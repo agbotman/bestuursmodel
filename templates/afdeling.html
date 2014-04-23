@@ -1,101 +1,102 @@
 {% extends "bestuursmodel_base.html" %}
-
-{% block left_panel %}
-<h3> Commissies en Afdelingen </h3>
-{% for afdeling in afdelingen%}
-<p> <a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a> </p>
-{% endfor %}
+{% block title %}Bestuursmodel SVW'27{% endblock %}
+{% block navigatie %}
+	<ul>
+		<li><a href="#">Home</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Services</a></li>
+		<li><a href="#">Contact us</a></li>
+	</ul>
 {% endblock %}
+{% block left_panel %}
+	<ul>
+		<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}/commissies">Commissies en afdelingen</a></li>
+		<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}/functies">Functies</a></li>
+		<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}/taken">Taken</a></li>
+		<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}/bevoegdheden">Bevoegdheden</a></li>
+		<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}/verantwoordelijkheden">Verantwoordelijkheden</a></li>
+	</ul>
+{% endblock %}
+{% block main_panel %}
+	<h2>
+		{{ afdeling.naam }}
+	</h2>
+	<h3>
+		Taakbeschrijving
+	</h3>
+	{{ afdeling.taakbeschrijving }}
+	{% if afdeling.rapporteert_aan %}
+	<br> {{ afdeling.naam }} rapporteert aan <a href="/bestuursmodel/afdeling/{{afdeling.rapporteert_aan.id}}"> {{afdeling.rapporteert_aan.naam}} </a>.
+	{% endif %}
 
-{% block main_block %}
-{% load mezzanine_tags %}
+	{% if view == "commissies" %}
+		<h3> Commissies en Afdelingen </h3>
+		{% if afdeling.get_children %}
+			<ul>{% for afdeling in afdeling.get_children %}
+					<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a></li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			{{ afdeling.naam }} heeft geen commissies of afdelingen
+		{% endif %}
+	{% endif %}
 
-<h1> {{afdeling.naam}} </h1>
+	{% if view == "functies" %}
+	<h3> Functies </h3>
+		{% if afdeling.functies.count %}
+			<ul>{% for functie in afdeling.functies.all %}
+				<li><a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a></li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			{{ afdeling.naam }} heeft geen functies
+		{% endif %}
+	{% endif %}
 
-<div class="accordion" id="accordionTaakbeschrijving">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTaakbeschrijving" href="#collapseTaakbeschrijving">
-        <h4> Taakbeschrijving</h4>
-      </a>
-    </div>
-    <div id="collapseTaakbeschrijving" class="accordion-body collapse in">
-      <div class="accordion-inner">
-        {% editable afdeling.taakbeschrijving %}{% endeditable %}
-      </div>
-    </div>
-  </div>
-</div>
+	{% if view == "taken" %}
+	<h3> Taken </h3>
+		{% if afdeling.taken.count %}
+			<ul>{% for taak in afdeling.taken.all %}
+				<li><a href="/bestuursmodel/taak/{{taak.id}}"> {{taak.naam}} </a></li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			{{ afdeling.naam }} heeft geen taken
+		{% endif %}
+	{% endif %}
 
-{% if afdeling.rapporteert_aan %}
-<div class="accordion" id="accordionRapporteert">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionRapporteert" href="#collapseRapporteert">
-        <h4> Rapporteert aan</h4>
-      </a>
-    </div>
-    <div id="collapseRapporteert" class="accordion-body collapse">
-      <div class="accordion-inner">
-        <a href="/bestuursmodel/afdeling/{{afdeling.rapporteert_aan.id}}"> {{afdeling.rapporteert_aan}} </a> 
-      </div>
-    </div>
-  </div>
-</div>
-{% endif %}
+	{% if view == "bevoegdheden" %}
+	<h3> Bevoegdheden </h3>
+		{% if afdeling.bevoegdheden.count %}
+			<ul>{% for bevoegdheid in afdeling.bevoegdheden.all %}
+				<li><a href="/bestuursmodel/bevoegdheid/{{bevoegdheid.id}}"> {{bevoegdheid.naam}} </a></li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			{{ afdeling.naam }} heeft geen bevoegdheden
+		{% endif %}
+	{% endif %}
 
-{% if user.is_staff %}
-  <a href="/admin/bestuursmodel/afdeling/add?rapporteert_aan={{afdeling.id}}" onclick="window.open (this.href, 'child', 'height=600,width=800'); return false"> <i class="icon-plus-sign "> </i> </a> 
-{% endif %}
-<div class="accordion" id="accordionAfdelingen">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionAfdelingen" href="#collapseAfdelingen">
-        <h4> Afdelingen en Commissies van {{afdeling.naam}} </h4>
-      </a>
-    </div>
-    <div id="collapseAfdelingen" class="accordion-body collapse">
-      <div class="accordion-inner">
-        <ul>
-          {% for commissie in afdeling.commissies.all %}
-            <li> <a href="/bestuursmodel/afdeling/{{commissie.id}}"> {{ commissie.naam }} </a> </li>
-          {% empty %}
-            Geen afdelingen of commissies
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="accordion" id="accordionFuncties">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionFuncties" href="#collapseFuncties">
-        <h4> Functies en Rollen van {{afdeling.naam}} </h4>
-      </a>
-    </div>
-    <div id="collapseFuncties" class="accordion-body collapse">
-      <div class="accordion-inner">
-        <table class="table table-bordered table-condensed">
-          <tr>
-            <thead>
-              <th>Functie</th>
-              <th>Rol</th>
-            </thead>
-          </tr>
-          {% for rol in afdeling.rollen.all %}
-            <tr>
-              <td><a href="/bestuursmodel/functie/{{rol.functie.id}}"> {{ rol.functie.naam }} </a></td>
-              <td>{{ rol.beschrijving }}</td>
-            </tr>
-          {% empty %}
-            Geen functies
-          {% endfor %}
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
+	{% if view == "verantwoordelijkheden" %}
+	<h3> Verantwoordelijkheden </h3>
+		{% if afdeling.verantwoordelijkheden.count %}
+			<ul>{% for verantwoordelijkheid in afdeling.verantwoordelijkheden.all %}
+				<li><a href="/bestuursmodel/verantwoordelijkheid/{{verantwoordelijkheid.id}}"> {{verantwoordelijkheid.naam}} </a></li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			{{ afdeling.naam }} heeft geen verantwoordelijkheden
+		{% endif %}
+	{% endif %}
+{% endblock %}
+{% block right_panel %}
+	<h3>
+		Aside heading
+	</h3>
+	<p>
+		Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan.
+	</p>
+{% endblock %}
+{% block footer %}
+	Copyright © Site name, 20XX
 {% endblock %}

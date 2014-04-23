@@ -8,8 +8,6 @@ class Afdeling(MPTTModel):
     rapporteert_aan = TreeForeignKey("Afdeling",
                                       related_name="commissies",
                                       blank=True, null=True)
-    functies = models.ManyToManyField("Functie",
-                                      through="Rol")
     sector = models.ForeignKey("Sector",
                                  related_name="functies",
                                blank=True, null=True)
@@ -30,9 +28,12 @@ class Afdeling(MPTTModel):
 class Functie(models.Model):
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("Functiebeschrijving")
-
+    afdeling = models.ForeignKey("Afdeling",
+                                 related_name="functies",
+                                 blank=True, null=True)
     class Meta:
         ordering = ["naam"]
+        verbose_name_plural = "Functies"
 
     def __unicode__(self):
         return self.naam
@@ -79,9 +80,9 @@ class Taak(models.Model):
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("Taakbeschrijving",
                                     blank=True, null=True)
-    rollen = models.ManyToManyField("Rol",
-                                    related_name="taken",
-                                    blank=True, null=True)
+    afdeling = models.ForeignKey("Afdeling",
+                                 related_name="taken",
+                                 blank=True, null=True)
 
     class Meta:
         ordering = ["naam"]
@@ -97,9 +98,6 @@ class Verantwoordelijkheid(models.Model):
     """
     naam = models.CharField(max_length=45, unique=True)
     beschrijving = models.TextField("beschrijving")
-    rol = models.ForeignKey(Rol,
-                            related_name="verantwoordelijkheden",
-                            blank=True, null=True)
     afdeling = models.ForeignKey(Afdeling,
                                  related_name='verantwoordelijkheden',
                                  blank=True, null=True)
@@ -111,6 +109,23 @@ class Verantwoordelijkheid(models.Model):
     def __unicode__(self):
         return self.naam
 
+
+class Bevoegdheid(models.Model):
+    """
+    Bevoegdheden worden kunnen worden toegekend aan een afdeling
+    """
+    naam = models.CharField(max_length=45, unique=True)
+    beschrijving = models.TextField("beschrijving")
+    afdeling = models.ForeignKey(Afdeling,
+                                 related_name='bevoegdheden',
+                                 blank=True, null=True)
+
+    class Meta:
+        ordering = ["naam"]
+        verbose_name_plural = "Bevoegdheden"
+
+    def __unicode__(self):
+        return self.naam
 
 class FunctieEis(models.Model):
     naam = models.CharField(max_length=45, unique=True)
