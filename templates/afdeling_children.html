@@ -1,0 +1,8 @@
+	{% if afdeling.get_children %}
+		<ul>{% for afdeling in afdeling.get_children %}
+				<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		{{ afdeling.naam }} heeft geen commissies of afdelingen
+	{% endif %}

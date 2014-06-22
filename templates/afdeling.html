@@ -1,4 +1,5 @@
 {% extends "bestuursmodel_base.html" %}
+{% load mptt_tags %}
 {% block title %}Bestuursmodel SVW'27{% endblock %}
 {% block navigatie %}
 	<ul>
@@ -10,92 +11,31 @@
 {% endblock %}
 {% block left_panel %}
 	<ul>
-		<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}/commissies">Commissies en afdelingen</a></li>
-		<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}/functies">Functies</a></li>
-		<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}/taken">Taken</a></li>
-		<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}/bevoegdheden">Bevoegdheden</a></li>
-		<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}/verantwoordelijkheden">Verantwoordelijkheden</a></li>
+<!--
+	{% recursetree afdelingen %}
+		{% if node.level < 2 %}
+		<li><a href="/bestuursmodel/afdeling/{{node.id}}">{{ node.naam }}</li></a>
+		{% endif %}
+		{{ children }}
+	{% endrecursetree %}
+-->
+	{% recursetree afdelingen %}
+		<li><a href="/bestuursmodel/afdeling/{{node.id}}">{{ node.naam }}</a>
+		{% if not node.is_leaf_node and node.level < 1 %}
+			<ul>
+				{{ children }}
+			</ul>
+		{% endif %}
+		</li>
+	{% endrecursetree %}
+
 	</ul>
 {% endblock %}
 {% block main_panel %}
-	<h2>
-		{{ afdeling.naam }}
-	</h2>
-	<h3>
-		Taakbeschrijving
-	</h3>
-	{{ afdeling.taakbeschrijving }}
-	{% if afdeling.rapporteert_aan %}
-	<br> {{ afdeling.naam }} rapporteert aan <a href="/bestuursmodel/afdeling/{{afdeling.rapporteert_aan.id}}"> {{afdeling.rapporteert_aan.naam}} </a>.
-	{% endif %}
-
-	{% if view == "commissies" %}
-		<h3> Commissies en Afdelingen </h3>
-		{% if afdeling.get_children %}
-			<ul>{% for afdeling in afdeling.get_children %}
-					<li><a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a></li>
-				{% endfor %}
-			</ul>
-		{% else %}
-			{{ afdeling.naam }} heeft geen commissies of afdelingen
-		{% endif %}
-	{% endif %}
-
-	{% if view == "functies" %}
-	<h3> Functies </h3>
-		{% if afdeling.functies.count %}
-			<ul>{% for functie in afdeling.functies.all %}
-				<li><a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a></li>
-			{% endfor %}
-			</ul>
-		{% else %}
-			{{ afdeling.naam }} heeft geen functies
-		{% endif %}
-	{% endif %}
-
-	{% if view == "taken" %}
-	<h3> Taken </h3>
-		{% if afdeling.taken.count %}
-			<ul>{% for taak in afdeling.taken.all %}
-				<li><a href="/bestuursmodel/taak/{{taak.id}}"> {{taak.naam}} </a></li>
-			{% endfor %}
-			</ul>
-		{% else %}
-			{{ afdeling.naam }} heeft geen taken
-		{% endif %}
-	{% endif %}
-
-	{% if view == "bevoegdheden" %}
-	<h3> Bevoegdheden </h3>
-		{% if afdeling.bevoegdheden.count %}
-			<ul>{% for bevoegdheid in afdeling.bevoegdheden.all %}
-				<li><a href="/bestuursmodel/bevoegdheid/{{bevoegdheid.id}}"> {{bevoegdheid.naam}} </a></li>
-			{% endfor %}
-			</ul>
-		{% else %}
-			{{ afdeling.naam }} heeft geen bevoegdheden
-		{% endif %}
-	{% endif %}
-
-	{% if view == "verantwoordelijkheden" %}
-	<h3> Verantwoordelijkheden </h3>
-		{% if afdeling.verantwoordelijkheden.count %}
-			<ul>{% for verantwoordelijkheid in afdeling.verantwoordelijkheden.all %}
-				<li><a href="/bestuursmodel/verantwoordelijkheid/{{verantwoordelijkheid.id}}"> {{verantwoordelijkheid.naam}} </a></li>
-			{% endfor %}
-			</ul>
-		{% else %}
-			{{ afdeling.naam }} heeft geen verantwoordelijkheden
-		{% endif %}
-	{% endif %}
+	{% include "afdeling_base.html" %}
 {% endblock %}
 {% block right_panel %}
-	<h3>
-		Aside heading
-	</h3>
-	<p>
-		Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan.
-	</p>
+hallo
 {% endblock %}
 {% block footer %}
 	Copyright © Site name, 20XX

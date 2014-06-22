@@ -24,13 +24,15 @@ def addInstance(request, addForm, field):
     return render_to_response("add_instance.html", pageContext, RequestContext(request))
 
 
-def afdeling(request, afdelingsid=1, view='commissies'):
+def afdeling(request, afdelingsid=1):
     try:
         afdeling = Afdeling.objects.get(id=int(afdelingsid))
     except:
         afdeling = Afdeling.objects.get(id=1)
+    hoofdbestuur = Afdeling.objects.get(id=1)
     return render_to_response('afdeling.html',
-                              {'afdeling': afdeling, 'view': view,},
+                              {'afdeling': afdeling,
+                               'afdelingen': Afdeling.objects.all(),},
                               RequestContext(request))
 
 def functie(request, functieid=1):

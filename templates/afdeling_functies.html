@@ -1,0 +1,8 @@
+	{% if afdeling.functies.count %}
+		<ul>{% for functie in afdeling.functies.all %}
+			<li><a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		{{ afdeling.naam }} heeft geen functies
+	{% endif %}

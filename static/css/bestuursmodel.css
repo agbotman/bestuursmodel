@@ -1,17 +1,22 @@
 #container
 {
-	margin: 0 auto;
-	width: 100%;
+	margin: 5px auto;
+	width: 99%;
 	background: #fff;
+	border: 1px solid gray;
 }
 
 #header
 {
-	background: #ccc;
-	padding: 20px;
+	background: #383;
+	padding: 15px;
 }
 
-#header h1 { margin: 0; }
+#header h1 
+{
+	margin: 0;
+	padding: 0;
+}
 
 #navigation
 {
@@ -48,54 +53,59 @@
 {
 	float: left;
 	width: 100%;
-	background: #fff url(/wp-content/uploads/layout-three-liquid-background1.gif) repeat-y 20% 0;
+	background: #fff;
 }
 
 #content-container2
 {
 	float: left;
 	width: 100%;
-	background: url(/wp-content/uploads/layout-three-liquid-background2.gif) repeat-y 80% 0;
+*	background: #ddd;
 }
 
 #section-navigation
 {
 	float: left;
 	width: 16%;
-	padding: 20px 0;
-	margin: 0 2%;
+	padding: 2% 1%;
+	margin: 0;
 	display: inline;
+	background: #eee;
+	font-size: small;
 }
 
 #section-navigation ul
 {
 	margin: 0;
-	padding: 0;
+	padding: 0 0 0 0;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 #section-navigation ul li
 {
-	margin: 0 0 1em;
-	padding: 0;
-	list-style-type: none;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 2% 2% 0px 10%;
+	list-style-type: square;
 }
 
 #content
 {
 	float: left;
 	width: 56%;
-	padding: 20px 0;
+	padding: 2% 1%;
 	margin: 0 0 0 2%;
 }
 
-#content h2 { margin: 0; }
+#content h2 { margin: 0 0 6px 0; border-bottom 1px solid;}
 
 #aside
 {
 	float: right;
-	width: 16%;
-	padding: 20px 0;
-	margin: 0 2% 0 0;
+	width: 14%;
+	padding: 2% 1%;
+	margin: 0;
 	display: inline;
 }
 
@@ -104,7 +114,7 @@
 #footer
 {
 	clear: both;
-	background: #ccc;
+	background: #383;
 	text-align: right;
 	padding: 20px;
 	height: 1%;

@@ -1,0 +1,8 @@
+	{% if afdeling.bevoegdheden.count %}
+		<ul>{% for bevoegdheid in afdeling.bevoegdheden.all %}
+			<li><a href="/bestuursmodel/bevoegdheid/{{bevoegdheid.id}}"> {{bevoegdheid.naam}} </a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		{{ afdeling.naam }} heeft geen bevoegdheden
+	{% endif %}

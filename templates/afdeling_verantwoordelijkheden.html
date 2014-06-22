@@ -1,0 +1,8 @@
+	{% if afdeling.verantwoordelijkheden.count %}
+		<ul>{% for verantwoordelijkheid in afdeling.verantwoordelijkheden.all %}
+			<li><a href="/bestuursmodel/verantwoordelijkheid/{{verantwoordelijkheid.id}}"> {{verantwoordelijkheid.naam}} </a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		{{ afdeling.naam }} heeft geen verantwoordelijkheden
+	{% endif %}

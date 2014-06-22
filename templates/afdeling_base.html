@@ -1,0 +1,39 @@
+	<h2>
+		{{ afdeling.naam }}
+	</h2>
+	{{ afdeling.taakbeschrijving }}
+	{% if afdeling.rapporteert_aan %}
+		{{ afdeling.naam }} rapporteert aan <a href="/bestuursmodel/afdeling/{{afdeling.rapporteert_aan.id}}"> {{afdeling.rapporteert_aan.naam}} </a>.
+	{% endif %}
+
+<div id="accordion">
+	<h3>Afdelingen en commissies</h3>
+	<div>
+	{% include "afdeling_children.html" %}
+	</div>
+	<h3>Functies</h3>
+	<div>
+	{% include "afdeling_functies.html" %}
+	</div>
+	<h3>Taken</h3>
+	<div>
+	{% include "afdeling_taken.html" %}
+	</div>
+	<h3>Bevoegdheden</h3>
+	<div>
+	{% include "afdeling_bevoegdheden.html" %}
+	</div>
+	<h3>Verantwoordelijkheden</h3>
+	<div>
+	{% include "afdeling_taken.html" %}
+	</div>
+</div>
+<script>
+	$(function() {
+		$( "#accordion" ).accordion(
+			{ heightStyle: content },
+			{ collapsible: true },
+			{ active: false }
+			);
+	});
+</script>
