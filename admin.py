@@ -55,7 +55,8 @@ class AfdelingAdminForm(ModelForm):
         if afdeling.pk:
             afdeling.taken = self.cleaned_data['taken']
             afdeling.bevoegdheden = self.cleaned_data['bevoegdheden']
-            self.save()
+#            self.save()
+            afdeling.save()
 
         return afdeling
 
