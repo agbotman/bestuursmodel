@@ -11,24 +11,15 @@
 {% endblock %}
 {% block left_panel %}
 	<ul>
-<!--
-	{% recursetree afdelingen %}
-		{% if node.level < 2 %}
-		<li><a href="/bestuursmodel/afdeling/{{node.id}}">{{ node.naam }}</li></a>
-		{% endif %}
-		{{ children }}
-	{% endrecursetree %}
--->
 	{% recursetree afdelingen %}
 		<li><a href="/bestuursmodel/afdeling/{{node.id}}">{{ node.naam }}</a>
-		{% if not node.is_leaf_node and node.level < 1 %}
+		{% if not node.is_leaf_node %}
 			<ul>
 				{{ children }}
 			</ul>
 		{% endif %}
 		</li>
 	{% endrecursetree %}
-
 	</ul>
 {% endblock %}
 {% block main_panel %}

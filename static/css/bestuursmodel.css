@@ -4,6 +4,8 @@
 	width: 99%;
 	background: #fff;
 	border: 1px solid gray;
+	font-family: verdana, geneva, tahoma, sans-serif;
+	font-size: 12px;
 }
 
 #header
@@ -55,7 +57,7 @@
 	width: 100%;
 	background: #fff;
 }
-
+http://www.handleidinghtml.nl/css/eigenschappen/font-family/voorbeelden.html
 #content-container2
 {
 	float: left;
@@ -71,7 +73,7 @@
 	margin: 0;
 	display: inline;
 	background: #eee;
-	font-size: small;
+	font-size: x-small;
 }
 
 #section-navigation ul
