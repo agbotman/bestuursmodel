@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
 class Afdeling(MPTTModel):
@@ -15,88 +16,95 @@ class Afdeling(MPTTModel):
     startdatum = models.DateField(blank=True, null=True)
     einddatum = models.DateField(blank=True, null=True)
 
+    class Meta:
+        ordering = ["naam"]
+        verbose_name_plural = "Afdelingen"
+
     class MPTTMeta:
         parent_attr = "rapporteert_aan"
         order_insertion_by = ["nummer"]
-
-    class Meta:
-        verbose_name_plural = "Afdelingen"
 
     def __unicode__(self):
         return self.naam
 
 class Functie(models.Model):
-    naam = models.CharField(max_length=45, unique=True)
+    naam = models.CharField(max_length=100, unique=True)
     beschrijving = models.TextField("Functiebeschrijving")
     afdeling = models.ForeignKey("Afdeling",
                                  related_name="functies",
                                  blank=True, null=True)
+    functietype = models.ForeignKey('FunctieType',
+                                 blank=True, null=True)
+                                 
     class Meta:
         ordering = ["naam"]
         verbose_name_plural = "Functies"
+        
+    def get_absolute_url(self):
+        return reverse('functie-detail', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         return self.naam
-
-class RolGeneriek(models.Model):
-    naam = models.CharField(max_length=45, unique=True)
-    beschrijving = models.TextField("beschrijving",
-                                    blank=True, null=True)
-
-    class Meta:
-        verbose_name_plural = "Generieke Rollen"
-    
-    def __unicode__(self):
-        return self.naam
-
-
-class Rol(models.Model):
-    afdeling = models.ForeignKey("Afdeling",
-                                 related_name="rollen")
-    functie = models.ForeignKey("Functie",
-                                related_name="rollen")
-    generieke_rol = models.ForeignKey("RolGeneriek",
-                                      blank=True, null=True)
-    beschrijving = models.TextField("beschrijving", default= ' ',
-                                    blank=True, null=True)
-
-    class Meta:
-        verbose_name_plural = "Rollen"
-
-    def beschrijving1(self):
-        out1 = ''
-        if self.generieke_rol:
-            out1 = self.generieke_rol.beschrijving  %(self.afdeling)   
-        return ' '.join([out1, self.beschrijving])
-
-    def __unicode__(self):
-        return "Rol van %s in %s" %(self.functie.naam, self.afdeling.naam)
-
 
 class Taak(models.Model):
+    """ Taak die behoort bij een afdeling
+        Taken die behoren bij een functie worden opgeslagen in het model FunctieTaak
     """
-    Taken worden kunnen worden toegekend aan meerdere rollen
-    """
-    naam = models.CharField(max_length=45, unique=True)
+    naam = models.CharField(max_length=100, unique=True)
     beschrijving = models.TextField("Taakbeschrijving",
                                     blank=True, null=True)
+    nummer = models.IntegerField(default=10)
     afdeling = models.ForeignKey("Afdeling",
                                  related_name="taken",
                                  blank=True, null=True)
 
     class Meta:
-        ordering = ["naam"]
-        verbose_name_plural = "Taken"
+        ordering = ["nummer"]
+        verbose_name_plural = "Afdelingstaken"
 
     def __unicode__(self):
         return self.naam
 
+class FunctieType(models.Model):
+    naam = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        ordering = ["naam"]
+    
+    def __unicode__(self):
+        return self.naam
+
+        
+class FunctieTaak(models.Model):
+    """ Taak die behoort bij een Functie
+        Taken die behoren bij een Afdeling worden opgeslagen in model Taak
+    """
+    naam = models.CharField(max_length=100, unique=True)
+    beschrijving = models.TextField("Taakbeschrijving",
+                                    blank=True, null=True)
+    functietype = models.ForeignKey('FunctieType',
+                                 blank=True, null=True)
+    functies = models.ManyToManyField(Functie, through='FunctieTaakDetails')
+
+    class Meta:
+        ordering = ["naam"]
+        verbose_name = "Taak"
+        verbose_name_plural = "Functietaken"
+    
+    def __unicode__(self):
+        return self.naam
+
+
+class FunctieTaakDetails(models.Model):
+    functietaak = models.ForeignKey("FunctieTaak", verbose_name="taak")
+    functie = models.ForeignKey("Functie") 
+    uur_per_maand = models.IntegerField()
 
 class Verantwoordelijkheid(models.Model):
     """
     Verantwoordelijkheden worden kunnen worden toegekend aan een rol of een afdeling
     """
-    naam = models.CharField(max_length=45, unique=True)
+    naam = models.CharField(max_length=100, unique=True)
     beschrijving = models.TextField("beschrijving")
     afdeling = models.ForeignKey(Afdeling,
                                  related_name='verantwoordelijkheden',
@@ -114,7 +122,7 @@ class Bevoegdheid(models.Model):
     """
     Bevoegdheden worden kunnen worden toegekend aan een afdeling
     """
-    naam = models.CharField(max_length=45, unique=True)
+    naam = models.CharField(max_length=100, unique=True)
     beschrijving = models.TextField("beschrijving")
     afdeling = models.ForeignKey(Afdeling,
                                  related_name='bevoegdheden',
@@ -128,7 +136,7 @@ class Bevoegdheid(models.Model):
         return self.naam
 
 class FunctieEis(models.Model):
-    naam = models.CharField(max_length=45, unique=True)
+    naam = models.CharField(max_length=100, unique=True)
     beschrijving = models.TextField("beschrijving")
     functies = models.ManyToManyField("Functie",
                                       related_name="functie_eisen",
@@ -142,7 +150,7 @@ class FunctieEis(models.Model):
 
 
 class Sector(models.Model):
-    naam = models.CharField(max_length=45, unique=True)
+    naam = models.CharField(max_length=100, unique=True)
     kleur = models.CharField(max_length=15)
     beschrijving = models.TextField("beschrijving")
     class Meta:

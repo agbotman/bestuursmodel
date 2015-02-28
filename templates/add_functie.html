@@ -1,0 +1,16 @@
+{% extends "bestuursmodel_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block left_panel %}
+
+<h3> Functies </h3>
+{% for functie in functies %}
+<p> <a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a> </p>
+{% endfor %}
+{% endblock %}
+
+{% block main_panel %}
+  {{ form_errors }}
+  {% crispy form %}
+  
+{% endblock %}

@@ -1,0 +1,10 @@
+{% load crispy_forms_tags %}
+
+<h1>Funct en functietaken toevoegen</h1>
+
+<form class="form-horizontal form-inline" method="post" >
+  {% csrf_token %}
+  <legend>Functie Details</legend>
+  {% crispy form %}
+
+</form>

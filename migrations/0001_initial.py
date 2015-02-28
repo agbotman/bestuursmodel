@@ -1,189 +1,176 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import mptt.fields
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Afdeling'
-        db.create_table('bestuursmodel_afdeling', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('nummer', self.gf('django.db.models.fields.PositiveIntegerField')(unique=True)),
-            ('naam', self.gf('django.db.models.fields.CharField')(unique=True, max_length=45)),
-            ('taakbeschrijving', self.gf('django.db.models.fields.TextField')()),
-            ('rapporteert_aan', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='commissies', null=True, to=orm['bestuursmodel.Afdeling'])),
-            ('sector', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='functies', null=True, to=orm['bestuursmodel.Sector'])),
-            ('permanent', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('startdatum', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('einddatum', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-        ))
-        db.send_create_signal('bestuursmodel', ['Afdeling'])
+    dependencies = [
+    ]
 
-        # Adding model 'Functie'
-        db.create_table('bestuursmodel_functie', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('naam', self.gf('django.db.models.fields.CharField')(unique=True, max_length=45)),
-            ('beschrijving', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('bestuursmodel', ['Functie'])
-
-        # Adding M2M table for field taken on 'Functie'
-        db.create_table('bestuursmodel_functie_taken', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('functie', models.ForeignKey(orm['bestuursmodel.functie'], null=False)),
-            ('taak', models.ForeignKey(orm['bestuursmodel.taak'], null=False))
-        ))
-        db.create_unique('bestuursmodel_functie_taken', ['functie_id', 'taak_id'])
-
-        # Adding M2M table for field verantwoordelijkheden on 'Functie'
-        db.create_table('bestuursmodel_functie_verantwoordelijkheden', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('functie', models.ForeignKey(orm['bestuursmodel.functie'], null=False)),
-            ('verantwoordelijkheid', models.ForeignKey(orm['bestuursmodel.verantwoordelijkheid'], null=False))
-        ))
-        db.create_unique('bestuursmodel_functie_verantwoordelijkheden', ['functie_id', 'verantwoordelijkheid_id'])
-
-        # Adding model 'AfdelingFunctie'
-        db.create_table('bestuursmodel_afdelingfunctie', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('afdeling', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['bestuursmodel.Afdeling'])),
-            ('functie', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['bestuursmodel.Functie'])),
-            ('beschrijving', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('bestuursmodel', ['AfdelingFunctie'])
-
-        # Adding model 'Taak'
-        db.create_table('bestuursmodel_taak', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('naam', self.gf('django.db.models.fields.CharField')(unique=True, max_length=45)),
-            ('beschrijving', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('bestuursmodel', ['Taak'])
-
-        # Adding model 'Verantwoordelijkheid'
-        db.create_table('bestuursmodel_verantwoordelijkheid', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('naam', self.gf('django.db.models.fields.CharField')(unique=True, max_length=45)),
-            ('beschrijving', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('bestuursmodel', ['Verantwoordelijkheid'])
-
-        # Adding model 'FunctieEis'
-        db.create_table('bestuursmodel_functieeis', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('naam', self.gf('django.db.models.fields.CharField')(unique=True, max_length=45)),
-            ('beschrijving', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('bestuursmodel', ['FunctieEis'])
-
-        # Adding M2M table for field functies on 'FunctieEis'
-        db.create_table('bestuursmodel_functieeis_functies', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('functieeis', models.ForeignKey(orm['bestuursmodel.functieeis'], null=False)),
-            ('functie', models.ForeignKey(orm['bestuursmodel.functie'], null=False))
-        ))
-        db.create_unique('bestuursmodel_functieeis_functies', ['functieeis_id', 'functie_id'])
-
-        # Adding model 'Sector'
-        db.create_table('bestuursmodel_sector', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('naam', self.gf('django.db.models.fields.CharField')(unique=True, max_length=45)),
-            ('kleur', self.gf('django.db.models.fields.CharField')(max_length=15)),
-            ('beschrijving', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('bestuursmodel', ['Sector'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'Afdeling'
-        db.delete_table('bestuursmodel_afdeling')
-
-        # Deleting model 'Functie'
-        db.delete_table('bestuursmodel_functie')
-
-        # Removing M2M table for field taken on 'Functie'
-        db.delete_table('bestuursmodel_functie_taken')
-
-        # Removing M2M table for field verantwoordelijkheden on 'Functie'
-        db.delete_table('bestuursmodel_functie_verantwoordelijkheden')
-
-        # Deleting model 'AfdelingFunctie'
-        db.delete_table('bestuursmodel_afdelingfunctie')
-
-        # Deleting model 'Taak'
-        db.delete_table('bestuursmodel_taak')
-
-        # Deleting model 'Verantwoordelijkheid'
-        db.delete_table('bestuursmodel_verantwoordelijkheid')
-
-        # Deleting model 'FunctieEis'
-        db.delete_table('bestuursmodel_functieeis')
-
-        # Removing M2M table for field functies on 'FunctieEis'
-        db.delete_table('bestuursmodel_functieeis_functies')
-
-        # Deleting model 'Sector'
-        db.delete_table('bestuursmodel_sector')
-
-
-    models = {
-        'bestuursmodel.afdeling': {
-            'Meta': {'ordering': "['nummer']", 'object_name': 'Afdeling'},
-            'einddatum': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'functies': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['bestuursmodel.Functie']", 'through': "orm['bestuursmodel.AfdelingFunctie']", 'symmetrical': 'False'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'naam': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '45'}),
-            'nummer': ('django.db.models.fields.PositiveIntegerField', [], {'unique': 'True'}),
-            'permanent': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'rapporteert_aan': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'commissies'", 'null': 'True', 'to': "orm['bestuursmodel.Afdeling']"}),
-            'sector': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'functies'", 'null': 'True', 'to': "orm['bestuursmodel.Sector']"}),
-            'startdatum': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'taakbeschrijving': ('django.db.models.fields.TextField', [], {})
-        },
-        'bestuursmodel.afdelingfunctie': {
-            'Meta': {'object_name': 'AfdelingFunctie'},
-            'afdeling': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['bestuursmodel.Afdeling']"}),
-            'beschrijving': ('django.db.models.fields.TextField', [], {}),
-            'functie': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['bestuursmodel.Functie']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
-        },
-        'bestuursmodel.functie': {
-            'Meta': {'ordering': "['naam']", 'object_name': 'Functie'},
-            'beschrijving': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'naam': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '45'}),
-            'taken': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'functies'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['bestuursmodel.Taak']"}),
-            'verantwoordelijkheden': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'functies'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['bestuursmodel.Verantwoordelijkheid']"})
-        },
-        'bestuursmodel.functieeis': {
-            'Meta': {'ordering': "['naam']", 'object_name': 'FunctieEis'},
-            'beschrijving': ('django.db.models.fields.TextField', [], {}),
-            'functies': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'functie_eisen'", 'symmetrical': 'False', 'to': "orm['bestuursmodel.Functie']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'naam': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '45'})
-        },
-        'bestuursmodel.sector': {
-            'Meta': {'ordering': "['naam']", 'object_name': 'Sector'},
-            'beschrijving': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'kleur': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
-            'naam': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '45'})
-        },
-        'bestuursmodel.taak': {
-            'Meta': {'ordering': "['naam']", 'object_name': 'Taak'},
-            'beschrijving': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'naam': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '45'})
-        },
-        'bestuursmodel.verantwoordelijkheid': {
-            'Meta': {'ordering': "['naam']", 'object_name': 'Verantwoordelijkheid'},
-            'beschrijving': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'naam': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '45'})
-        }
-    }
-
-    complete_apps = ['bestuursmodel']
+    operations = [
+        migrations.CreateModel(
+            name='Afdeling',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('nummer', models.PositiveIntegerField(unique=True)),
+                ('naam', models.CharField(unique=True, max_length=45)),
+                ('taakbeschrijving', models.TextField(verbose_name=b'Taakbeschrijving')),
+                ('permanent', models.BooleanField(default=True)),
+                ('startdatum', models.DateField(null=True, blank=True)),
+                ('einddatum', models.DateField(null=True, blank=True)),
+                ('lft', models.PositiveIntegerField(editable=False, db_index=True)),
+                ('rght', models.PositiveIntegerField(editable=False, db_index=True)),
+                ('tree_id', models.PositiveIntegerField(editable=False, db_index=True)),
+                ('level', models.PositiveIntegerField(editable=False, db_index=True)),
+                ('rapporteert_aan', mptt.fields.TreeForeignKey(related_name='commissies', blank=True, to='bestuursmodel.Afdeling', null=True)),
+            ],
+            options={
+                'ordering': ['naam'],
+                'verbose_name_plural': 'Afdelingen',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Bevoegdheid',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('naam', models.CharField(unique=True, max_length=100)),
+                ('beschrijving', models.TextField(verbose_name=b'beschrijving')),
+                ('afdeling', models.ForeignKey(related_name='bevoegdheden', blank=True, to='bestuursmodel.Afdeling', null=True)),
+            ],
+            options={
+                'ordering': ['naam'],
+                'verbose_name_plural': 'Bevoegdheden',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Functie',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('naam', models.CharField(unique=True, max_length=100)),
+                ('beschrijving', models.TextField(verbose_name=b'Functiebeschrijving')),
+                ('afdeling', models.ForeignKey(related_name='functies', blank=True, to='bestuursmodel.Afdeling', null=True)),
+            ],
+            options={
+                'ordering': ['naam'],
+                'verbose_name_plural': 'Functies',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='FunctieEis',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('naam', models.CharField(unique=True, max_length=100)),
+                ('beschrijving', models.TextField(verbose_name=b'beschrijving')),
+                ('functies', models.ManyToManyField(related_name='functie_eisen', verbose_name=b'Functie eisen', to='bestuursmodel.Functie')),
+            ],
+            options={
+                'ordering': ['naam'],
+                'verbose_name_plural': 'Functie-eisen',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='FunctieTaak',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('naam', models.CharField(unique=True, max_length=100)),
+                ('beschrijving', models.TextField(null=True, verbose_name=b'Taakbeschrijving', blank=True)),
+            ],
+            options={
+                'ordering': ['naam'],
+                'verbose_name': 'Taak',
+                'verbose_name_plural': 'Taken',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='FunctieTaakDetails',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('uur_per_maand', models.IntegerField()),
+                ('functie', models.ForeignKey(to='bestuursmodel.Functie')),
+                ('functietaak', models.ForeignKey(verbose_name=b'taak', to='bestuursmodel.FunctieTaak')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='FunctieType',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('naam', models.CharField(unique=True, max_length=100)),
+            ],
+            options={
+                'ordering': ['naam'],
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Sector',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('naam', models.CharField(unique=True, max_length=100)),
+                ('kleur', models.CharField(max_length=15)),
+                ('beschrijving', models.TextField(verbose_name=b'beschrijving')),
+            ],
+            options={
+                'ordering': ['naam'],
+                'verbose_name_plural': 'Sectoren',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Taak',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('naam', models.CharField(unique=True, max_length=100)),
+                ('beschrijving', models.TextField(null=True, verbose_name=b'Taakbeschrijving', blank=True)),
+                ('nummer', models.IntegerField(default=10)),
+                ('afdeling', models.ForeignKey(related_name='taken', blank=True, to='bestuursmodel.Afdeling', null=True)),
+            ],
+            options={
+                'ordering': ['nummer'],
+                'verbose_name_plural': 'Taken',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Verantwoordelijkheid',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('naam', models.CharField(unique=True, max_length=100)),
+                ('beschrijving', models.TextField(verbose_name=b'beschrijving')),
+                ('afdeling', models.ForeignKey(related_name='verantwoordelijkheden', blank=True, to='bestuursmodel.Afdeling', null=True)),
+            ],
+            options={
+                'ordering': ['naam'],
+                'verbose_name_plural': 'Verantwoordelijkheden',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='functietaak',
+            name='functies',
+            field=models.ManyToManyField(to='bestuursmodel.Functie', through='bestuursmodel.FunctieTaakDetails'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='functie',
+            name='functietype',
+            field=models.ForeignKey(blank=True, to='bestuursmodel.FunctieType', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='afdeling',
+            name='sector',
+            field=models.ForeignKey(related_name='functies', blank=True, to='bestuursmodel.Sector', null=True),
+            preserve_default=True,
+        ),
+    ]

@@ -1,0 +1,28 @@
+{% extends "bestuursmodel_base.html" %}
+
+{% block left_panel %}
+left_panel
+{% endblock %}
+
+{% block main_panel %}
+<div class="row">
+    <p>Wilt u de functie <b>{{ object }}</b> verwijderen?</p>
+</div>
+
+<div class="row">
+    <div class="col-xs-3">
+    <form method="post">{% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-lg active">
+            Verwijderen   
+        </button>
+    </form>
+    </div>
+    <div class="col-xs-3">
+    <a href="{% url 'functie_list' %}" class="btn btn-danger btn-lg active" role="button">
+        Afbreken
+    </a>
+    </div>
+</div>
+
+
+{% endblock %}

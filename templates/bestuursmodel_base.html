@@ -1,44 +1,38 @@
-{% load mezzanine_tags %}
-<!doctype html>
-<html>
-<head>
-<!-- include the Tools -->
-<link rel="stylesheet" href="{{ STATIC_URL }}css/bestuursmodel.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="{{ STATIC_URL }}css/vertical-tabs.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="{{ STATIC_URL }}jquery-ui-1.10.4.ton/css/ton/jquery-ui-1.10.4.custom.css">
-<script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
-<script src="{{ STATIC_URL }}jquery-ui-1.10.4.ton/js/jquery-ui-1.10.4.custom.js"></script>
+{% extends "base.html" %}
+{% load mptt_tags %}
+{% block left_panel %}
+    <h3>Beschrijving</h3>
+    <ul>
+    <li><a href="{% url 'bestuursmodel' %}">Inleiding</a></li>
+    <li><a href="{% url 'bestuursmodel_uitgangspunten' %}">Uitgangspunten</a></li>
+    <li><a href="{% url 'bestuursmodel_sectoren' %}">Sectoren</a></li>
+    <li><a href="{% url 'bestuursmodel_uitwerking' %}">Uitwerking</a></li>
+    <li><a href="{% url 'bestuursmodel_planningcontrol' %}">Planning en controlecyclus</a></li>
+    </ul>
+    <h3>Algemene vergadering</h3>
+    <ul>
+    {% recursetree afdelingen %}
+        {% if node.nummer < 50 %}
+            <li><a href="/bestuursmodel/afdeling/{{node.id}}">{{node.naam}}</a></li>
+            {% if not node.is_leaf_node and node.level < 1 %}
+                {{ children }}
+            {% endif %}
+        {% endif %}
+    {% endrecursetree %}
+    </ul>
+    <h3>Bestuur</h3>
+    <ul>
+    {% recursetree afdelingen %}
+        {% if node.nummer > 50 %}
+            <li><a href="/bestuursmodel/afdeling/{{node.id}}">{{node.naam}}</a></li>
+            {% if not node.is_leaf_node and node.level < 1 %}
+                {{ children }}
+            {% endif %}
+        {% endif %}
+    {% endrecursetree %}
+    </ul>
+{% endblock %}
+{% block main_title %}
+<h1>Bestuursmodel SVW'27</h1>
+{% endblock %}
 
-</head>
-<div id="container">
-	<div id="header">
-		<h1>
-			{% block title %}{% endblock %}
-		</h1>
-	</div>
-	<div id="navigation">
-		{% block navigatie %}
-		{% endblock %}
-	</div>
-	<div id="content-container1">
-		<div id="content-container2">
-			<div id="section-navigation">
-				{% block left_panel %}
-				{% endblock %}
-			</div>
-			<div id="content">
-				{% block main_panel %}
-				{% endblock %}
-			</div>
-			<div id="aside">
-				{% block right_panel %}
-				{% endblock %}
-			</div>
-			<div id="footer">
-				{% block footer %}
-				{% endblock %}
-			</div>
-		</div>
-	</div>
-</div>
-</html>

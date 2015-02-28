@@ -1,27 +1,4 @@
 {% extends "bestuursmodel_base.html" %}
-{% load mptt_tags %}
-{% block title %}Bestuursmodel SVW'27{% endblock %}
-{% block navigatie %}
-	<ul>
-		<li><a href="#">Home</a></li>
-		<li><a href="#">About</a></li>
-		<li><a href="#">Services</a></li>
-		<li><a href="#">Contact us</a></li>
-	</ul>
-{% endblock %}
-{% block left_panel %}
-	<ul>
-	{% recursetree afdelingen %}
-		<li><a href="/bestuursmodel/afdeling/{{node.id}}">{{ node.naam }}</a>
-		{% if not node.is_leaf_node %}
-			<ul>
-				{{ children }}
-			</ul>
-		{% endif %}
-		</li>
-	{% endrecursetree %}
-	</ul>
-{% endblock %}
 {% block main_panel %}
 	{% include "afdeling_base.html" %}
 {% endblock %}

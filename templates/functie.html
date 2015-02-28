@@ -1,108 +1,19 @@
 {% extends "bestuursmodel_base.html" %}
 
 {% block left_panel %}
-<h3> Functies </h3>
-{% for functie in functies %}
-<p> <a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a> </p>
-{% endfor %}
+left panel
 {% endblock %}
 
-{% block main_block %}
-{% load mezzanine_tags %}
-<h1> {% editable functie.naam %}{% endeditable %} </h1>
-{% if user.is_staff %}
+{% block main_title %}
+    <h1>Functies SVW'27</h1>
+{% endblock %}
 
-    <a href="/bestuursmodel/add/functie?next={{request.path}}">
-      <i class="icon-plus-sign "> </i> 
-    </a>
-{% endif %}
-
-
-<div class="accordion" id="accordionFunctiebeschrijving">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionFunctiebeschrijving" href="#collapseFunctiebeschrijving">
-        <h4> Functiebeschrijving</h4>
-      </a>
-    </div>
-    <div id="collapseFunctiebeschrijving" class="accordion-body collapse in">
-      <div class="accordion-inner">
-        {% editable functie.beschrijving %}{% endeditable %}
-      </div>
-    </div>
-  </div>
-</div>
-
-{% if user.is_staff %}
-  <a href="/admin/bestuursmodel/rol/add?functie={{functie.id}}" onclick="window.open (this.href, 'child', 'height=600,width=800,scrollbars'); return false"> <i class="icon-plus-sign "> </i> </a> 
-{% endif %}
-<div class="accordion" id="accordionRollen">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionRollen" href="#collapseRollen">
-        <h4> Rollen</h4>
-      </a>
-    </div>
-    <div id="collapseRollen" class="accordion-body collapse">
-      <div class="accordion-inner">
-        {% for rol in functie.rollen.all %}
-
-          {% if user.is_staff %}
-            <a href="/admin/bestuursmodel/rol/{{rol.id}}" onclick="window.open (this.href, 'child', 'height=600,width=800,scrollbars'); return false"> <i class="icon-edit"> </i> </a> 
-          {% endif %}
-          <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#Rol{{forloop.counter}}">
-          <b> {{ rol.beschrijving1 }} </b>
-          </button>
-          afdeling <a href="/bestuursmodel/afdeling/{{rol.afdeling.id}}"> {{rol.afdeling.naam}} </a> 
-          <div id="Rol{{forloop.counter}}" class="collapse offset1">
-
-
-            <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#Taken{{forloop.counter}}">
-              <b> <i class="icon-tasks"> </i> Taken </b>
-            </button>
-            <div id="Taken{{forloop.counter}}" class="collapse">
-              {% for taak in rol.taken.all %}
-                <i class="icon-hand-right"> </i> {{ taak.beschrijving }}<br>
-              {% empty %}
-                <i class="icon-hand-right"> </i> Geen taken
-              {% endfor %}
-            </div>
-
-            <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#Verantwoordelijkheden{{forloop.counter}}">
-              <b> <i class="icon-tasks"> </i> Verantwoordelijkheden </b>
-            </button>
-            <div id="Verantwoordelijkheden{{forloop.counter}}" class="collapse">
-              {% for verantwoordelijkheid in rol.verantwoordelijkheden.all %}
-                <i class="icon-hand-right"> </i> {{ verantwoordelijkheid.beschrijving }} <br>
-              {% empty %}
-                <i class="icon-hand-right"> </i> Geen verantwoordelijkheden
-              {% endfor %}
-            </div>
-          </div>
+{% block main_panel %}
+<div class="row">
+        {% for functie in functie_list %}
+            <div class="col-xs-5">{{ functie.naam }}</div>
+            <div class="col-xs-2"><a href="{% url 'functie_change' functie.id %}" class="btn btn-primary btn-xs active" role="button">Wijzigen</a></div>
+            <div class="col-xs-2"><a href="{% url 'functie_delete' functie.id %}" class="btn btn-danger btn-xs active" role="button">Verwijderen</a></div>
         {% endfor %}
-      </div>
-    </div>
-  </div>
 </div>
-
-
-<div class="accordion" id="accordionFunctieEisen">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionFunctieEisen" href="#collapseFunctieEisen">
-        <h4> Functie Eisen</h4>
-      </a>
-    </div>
-    <div id="collapseFunctieEisen" class="accordion-body collapse">
-      <div class="accordion-inner">
-         {% for functieeis in functie.functie_eisen.all %}
-           <i class="icon-hand-right"> </i> {% editable functieeis.beschrijving %}{% endeditable %} <br>
-         {% empty %}
-           Geen functie eisen
-         {% endfor %}
-      </div>
-    </div>
-  </div>
-</div>
-
 {% endblock %}

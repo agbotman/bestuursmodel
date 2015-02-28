@@ -1,6 +1,7 @@
 	{% if afdeling.taken.count %}
 		<ul>{% for taak in afdeling.taken.all %}
-			<li>{{taak.beschrijving}}</li>
+			<li>{{taak.naam}}</li>
+			{{taak.beschrijving|linebreaksbr}}
 		{% endfor %}
 		</ul>
 	{% else %}
