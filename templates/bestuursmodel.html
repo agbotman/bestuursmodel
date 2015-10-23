@@ -1,7 +1,26 @@
 {% extends "bestuursmodel_base.html" %}
 {% block main_panel %}
-<h3> Inleiding </h3>
-<p>Veel verenigingen krijgen het steeds moeilijker en sommigen worden zelfs door allerlei oorzaken in het voortbestaan bedreigd of kunnen nauwelijks nog voldoen aan de verwachtingen van hun leden. Er lijkt een professionaliseringslag nodig te zijn om te overleven.</p>
-<p>Zowel de leden als de omgeving stellen steeds hogere eisen aan het bestuur van een vereniging. Deze eisen hebben enerzijds betrekking op het adequaat reageren op voorkomende situaties en anderzijds moet er voortdurend ingespeeld worden op een snel veranderende omgeving.</p>
-<p>SVW'27 is zich hiervan bewust en heeft de beleidscommissie opdracht gegeven een bestuursmodel te ontwikkelen dat het hoofd kan bieden aan deze ontwikkelingen.</p>
+<h1>Bestuursmodel SVW'27</h1>
+<h2>{{ title }}</h2>
+{% include detail_html %}
+<nav>
+  <ul class="pager">
+    <li {% if sublink == 'inleiding' %}class="disabled"{% endif %}>
+        <a href="{% url 'bestuursmodel_inleiding' %}">Inleiding</a>
+    </li>
+    <li {% if sublink == 'uitgangspunten' %}class="disabled"{% endif %}>
+        <a href="{% url 'bestuursmodel_uitgangspunten' %}">Uitgangspunten</a>
+    </li>
+    <li {% if sublink == 'sectoren' %}class="disabled"{% endif %}>
+        <a href="{% url 'bestuursmodel_sectoren' %}">Sectoren</a>
+    </li>
+    <li {% if sublink == 'uitwerking' %}class="disabled"{% endif %}>
+        <a href="{% url 'bestuursmodel_uitwerking' %}">Uitwerking</a>
+    </li>
+    <li {% if sublink == 'planningcontrol' %}class="disabled"{% endif %}>
+        <a href="{% url 'bestuursmodel_planningcontrol' %}">Planning & Control</a>
+    </li>
+  </ul>
+</nav>
+
 {% endblock %}

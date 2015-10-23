@@ -1,0 +1,29 @@
+{% extends "bestuursmodel_base.html" %}
+{% block main_panel %}
+    <h3>Afdelingen en Commissies</h3>
+    Het bestuursmodel definieert een groot aantal afdelingen en commissies. Gebruik onderstaande zoekbalk om afdelingen en commissies te zoeken<br><br>
+    <form role="form search">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+            <div class="form-group">
+                <input type="text" name="q" value="{{query}}" class="form-control" placeholder="Zoek afdeling of commissie">
+            </div>
+        </div>
+    </form>
+    {% if query %}
+        <h4>Gevonden afdelingen en commissies</h4>
+        {% if afdelingen %}
+            <ul>{% for afdeling in afdelingen %}
+                <li><a href="/bestuursmodel/afdeling/{{afdeling.id}}"> {{afdeling.naam}} </a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+                Geen afdelingen of commissies gevonden
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

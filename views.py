@@ -11,31 +11,36 @@ from django.http import HttpResponseRedirect, Http404
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
+from django.db.models import Sum
 
 def bestuursmodel(request):
+    activelink = "bestuursmodel"
+    if request.path == "/bestuursmodel/":
+        detail = 'inleiding'
+    else:
+        detail = request.path.split('/')[-2]
+    detail_html = 'bestuursmodel_' + detail + '.html'
+    if detail == 'planningcontrol':
+        title = 'Planning & Control'
+    else:
+        title = detail.title()
     return render(request, 'bestuursmodel.html',
-                             {'afdelingen': Afdeling.objects.all(),}
+                             {'activelink': activelink,
+                              'sublink': detail,
+                              'detail_html': detail_html,
+                              'title': title,
+							   }
                   )
 
-def bestuursmodel_uitgangspunten(request):
-    return render(request, 'bestuursmodel_uitgangspunten.html',
-                             {'afdelingen': Afdeling.objects.all(),}
-                  )
-
-def bestuursmodel_sectoren(request):
-    return render(request, 'bestuursmodel_sectoren.html',
-                             {'afdelingen': Afdeling.objects.all(),}
-                  )
-
-def bestuursmodel_uitwerking(request):
-    return render(request, 'bestuursmodel_uitwerking.html',
-                             {'afdelingen': Afdeling.objects.all(),}
-                  )
-
-def bestuursmodel_planningcontrol(request):
-    return render(request, 'bestuursmodel_planningcontrol.html',
-                             {'afdelingen': Afdeling.objects.all(),}
-                  )
+def afdelingen(request):
+    if 'q' in request.GET and request.GET['q']:
+        q = request.GET['q']
+        afdelingen = Afdeling.objects.filter(naam__icontains=q)
+    else:
+        afdelingen = []
+        q = ''
+    return render(request, 'afdelingen.html',
+        {'afdelingen': afdelingen, 'query': q})
 
 def afdeling(request, afdelingsid=1):
     try:
@@ -43,20 +48,28 @@ def afdeling(request, afdelingsid=1):
     except:
         raise Http404
     return render(request, 'afdeling.html', 
-                            {'afdeling': afdeling,
-                             'afdelingen': Afdeling.objects.all(),}
+                            {'afdeling': afdeling,}
                   )
 
+
+def functies(request):
+    if 'q' in request.GET and request.GET['q']:
+        q = request.GET['q']
+        functies = Functie.objects.filter(naam__icontains=q)
+    else:
+        functies = []
+        q = ''
+    return render(request, 'functies.html',
+        {'functies': functies, 'query': q})
 
 def functie(request, functieid=1):
     try:
         functie = Functie.objects.get(id=int(functieid))
     except:
         raise Http404
-    functies = Functie.objects.all()
     return render(request, 'functie.html',
                               {'functie': functie,
-                               'functies': functies,
+                               'uurtotaal': functie.functietaakdetails.aggregate(Sum('uur_per_maand')),
                                }
                   )
 

@@ -12,7 +12,7 @@ class FunctieEisInline(admin.TabularInline):
     verbose_name_plural = "Eisen voor deze functie"
 
 class FunctieTaakInline(admin.TabularInline):
-    model = FunctieTaak.functies.through
+    model = Functie.taken.through
     extra = 1
     verbose_name_plural = "Taken voor deze functie"
     

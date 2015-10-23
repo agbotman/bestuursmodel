@@ -1,19 +1,15 @@
 {% extends "bestuursmodel_base.html" %}
-
-{% block left_panel %}
-left panel
-{% endblock %}
-
-{% block main_title %}
-    <h1>Functies SVW'27</h1>
-{% endblock %}
-
 {% block main_panel %}
-<div class="row">
-        {% for functie in functie_list %}
-            <div class="col-xs-5">{{ functie.naam }}</div>
-            <div class="col-xs-2"><a href="{% url 'functie_change' functie.id %}" class="btn btn-primary btn-xs active" role="button">Wijzigen</a></div>
-            <div class="col-xs-2"><a href="{% url 'functie_delete' functie.id %}" class="btn btn-danger btn-xs active" role="button">Verwijderen</a></div>
-        {% endfor %}
-</div>
+	<h3>{{ functie.naam }}</h3>
+    {{ functie.beschrijving|linebreaksbr }}
+    <h4>Plaats in de organisatie</h4>
+    {{ functie.naam }} maakt deel uit van  <a href="{% url 'afdeling' functie.afdeling.id %}">{{ functie.afdeling }}</a>.
+
+
+<h4>Taken</h4>
+{% include "functie_taken.html" %}
+
+<h4>Functie-eisen</h4>
+{% include "functie_eisen.html" %}
+
 {% endblock %}

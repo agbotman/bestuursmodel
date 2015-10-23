@@ -43,14 +43,13 @@ class FunctieForm(ModelForm):
         self.helper.field_class = 'col-lg-9'
         self.helper.form_method = 'post'
         self.helper.layout = Layout(
-                Fieldset('Functie',
+                MultiField('Functie',
                         Field('naam', css_class="input-sm"),
                         Field('beschrijving', css_class="input-sm", rows=3),
                         Field('afdeling', css_class="input-sm"),
                         Field('functietype', css_class="input-sm"),
                         ),
                         FormsetField(formset=self.takenformset, template="table_inline_formset2.html"),
-                ButtonHolder(Submit('submit', 'Submit', css_class='button white'))
                 )
 
     class Meta:
@@ -69,7 +68,7 @@ class FunctieForm(ModelForm):
         return self.object
 
 TakenFormSet = inlineformset_factory(Functie, 
-    FunctieTaak.functies.through, 
+    Functie.taken.through,
     can_delete=True,
     extra=1)
     

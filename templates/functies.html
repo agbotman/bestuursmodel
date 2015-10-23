@@ -1,0 +1,29 @@
+{% extends "bestuursmodel_base.html" %}
+{% block main_panel %}
+    <h3>Functies</h3>
+    Het bestuursmodel definieert een groot aantal functies. Gebruik onderstaande zoekbalk om functies te zoeken<br><br>
+    <form role="form search">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+            <div class="form-group">
+                <input type="text" name="q" value="{{query}}" class="form-control" placeholder="Zoek functie">
+            </div>
+        </div>
+    </form>
+    {% if query %}
+        <h4>Gevonden functies</h4>
+        {% if functies %}
+            <ul>{% for functie in functies %}
+                <li><a href="/bestuursmodel/functie/{{functie.id}}"> {{functie.naam}} </a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+                Geen functies gevonden
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

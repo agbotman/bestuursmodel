@@ -35,6 +35,7 @@ class Functie(models.Model):
                                  blank=True, null=True)
     functietype = models.ForeignKey('FunctieType',
                                  blank=True, null=True)
+    taken = models.ManyToManyField("FunctieTaak", through='FunctieTaakDetails')
                                  
     class Meta:
         ordering = ["naam"]
@@ -84,7 +85,6 @@ class FunctieTaak(models.Model):
                                     blank=True, null=True)
     functietype = models.ForeignKey('FunctieType',
                                  blank=True, null=True)
-    functies = models.ManyToManyField(Functie, through='FunctieTaakDetails')
 
     class Meta:
         ordering = ["naam"]
@@ -97,7 +97,7 @@ class FunctieTaak(models.Model):
 
 class FunctieTaakDetails(models.Model):
     functietaak = models.ForeignKey("FunctieTaak", verbose_name="taak")
-    functie = models.ForeignKey("Functie") 
+    functie = models.ForeignKey("Functie", related_name="functietaakdetails") 
     uur_per_maand = models.IntegerField()
 
 class Verantwoordelijkheid(models.Model):

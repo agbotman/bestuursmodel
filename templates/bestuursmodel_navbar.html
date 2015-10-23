@@ -1,0 +1,34 @@
+<li class="dropdown">
+    <a href="{% url 'bestuursmodel_inleiding' %}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bestuursmodel SVW'27<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="{% url 'bestuursmodel_inleiding' %}">Inleiding</a>
+        </li>
+        <li>
+            <a href="{% url 'bestuursmodel_uitgangspunten' %}">Uitgangspunten</a>
+        </li>
+        <li>
+            <a href="{% url 'bestuursmodel_sectoren' %}">Sectoren</a>
+        </li>
+        <li>
+            <a href="{% url 'bestuursmodel_uitwerking' %}">Uitwerking</a>
+        </li>
+        <li>
+            <a href="{% url 'bestuursmodel_planningcontrol' %}">Planning & Control</a>
+        </li>
+        <li role="separator" class="divider"></li>
+         <li>
+            <a href="{% url 'afdeling' alv.id %}">Algemene Vergadering</a>
+        </li>
+        <li>
+            <a href="{% url 'afdeling' hb.id %}">Hoofdbestuur</a>
+        </li>
+        <li role="separator" class="divider"></li>
+         <li>
+            <a href="{% url 'afdelingen' %}">Afdelingen en Commissies</a>
+        </li>
+        <li>
+            <a href="{% url 'functies' %}">Functies</a>
+        </li>
+   </ul>
+</li>

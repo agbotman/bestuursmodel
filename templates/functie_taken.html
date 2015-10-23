@@ -1,0 +1,28 @@
+	{% if functie.functietaakdetails.count %}
+        <table class="table table-condensed table-bordered">
+            <thead>
+                <tr>
+                    <th>Taak</th>
+                    <th>Uur per maand</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ft in functie.functietaakdetails.all %}
+                    <tr>
+                        <td>{{ft.functietaak}}</td>
+                        <td>{{ft.uur_per_maand}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        {% if functie.functietaakdetails.count > 1 %}
+             <tfoot>
+                <tr>
+                    <th>Totaal</th>
+                    <th>{{uurtotaal.uur_per_maand__sum}}</th>
+                </tr>
+            </tfoot>
+       {% endif %}
+       </table>
+	{% else %}
+		{{ functie.naam }} heeft geen taken.
+	{% endif %}

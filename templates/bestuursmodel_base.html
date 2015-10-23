@@ -1,38 +1,37 @@
 {% extends "base.html" %}
 {% load mptt_tags %}
-{% block left_panel %}
-    <h3>Beschrijving</h3>
-    <ul>
-    <li><a href="{% url 'bestuursmodel' %}">Inleiding</a></li>
-    <li><a href="{% url 'bestuursmodel_uitgangspunten' %}">Uitgangspunten</a></li>
-    <li><a href="{% url 'bestuursmodel_sectoren' %}">Sectoren</a></li>
-    <li><a href="{% url 'bestuursmodel_uitwerking' %}">Uitwerking</a></li>
-    <li><a href="{% url 'bestuursmodel_planningcontrol' %}">Planning en controlecyclus</a></li>
-    </ul>
-    <h3>Algemene vergadering</h3>
-    <ul>
-    {% recursetree afdelingen %}
-        {% if node.nummer < 50 %}
-            <li><a href="/bestuursmodel/afdeling/{{node.id}}">{{node.naam}}</a></li>
-            {% if not node.is_leaf_node and node.level < 1 %}
-                {{ children }}
-            {% endif %}
+{% block title %}Bestuursmodel SVW'27{% endblock %}
+
+{% block right_panel %}
+    <br>
+    <h4>
+        <a href="{% url 'bestuursmodel_inleiding' %}">Inleiding</a>
+    </h4>
+        <a href="{% url 'bestuursmodel_uitgangspunten' %}">Uitgangspunten</a><br>
+        <a href="{% url 'bestuursmodel_sectoren' %}">Sectoren</a><br>
+        <a href="{% url 'bestuursmodel_uitwerking' %}">Uitwerking</a><br>
+        <a href="{% url 'bestuursmodel_planningcontrol' %}">Planning en controlecyclus</a><br>
+
+    {% recursetree alv_afdelingen %}
+        {% if node.level == 0 %}<h4>{% endif %}
+            <a href="{% url 'afdeling' node.id %}">{{node.naam}}</a>
+        {% if node.level == 0 %}</h4>{% else %}<br>{% endif %}
+        {% if not node.is_leaf_node and node.level < 1 %}
+            {{ children }}
         {% endif %}
     {% endrecursetree %}
-    </ul>
-    <h3>Bestuur</h3>
-    <ul>
-    {% recursetree afdelingen %}
-        {% if node.nummer > 50 %}
-            <li><a href="/bestuursmodel/afdeling/{{node.id}}">{{node.naam}}</a></li>
-            {% if not node.is_leaf_node and node.level < 1 %}
-                {{ children }}
-            {% endif %}
+
+    {% recursetree hb_afdelingen %}
+        {% if node.level == 0 %}<h4>{% endif %}
+            <a href="{% url 'afdeling' node.id %}">{{node.naam}}</a>
+        {% if node.level == 0 %}</h4>{% else %}<br>{% endif %}
+        {% if not node.is_leaf_node and node.level < 1 %}
+            {{ children }}
         {% endif %}
     {% endrecursetree %}
-    </ul>
+    
+     <h4><a href="{% url 'afdelingen' %}">Afdelingen en Commissies</a></h4>
+     <h4><a href="{% url 'functies' %}">Functies</a></h4>
 {% endblock %}
-{% block main_title %}
-<h1>Bestuursmodel SVW'27</h1>
-{% endblock %}
+
 

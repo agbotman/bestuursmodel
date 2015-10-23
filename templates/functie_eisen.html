@@ -1,0 +1,9 @@
+	{% if functie.functie_eisen.count %}
+		<ul>
+            {% for functie_eis in functie.functie_eisen.all %}
+                <li>{{functie_eis.beschrijving|linebreaksbr}}</li>
+            {% endfor %}
+		</ul>
+	{% else %}
+		{{ functie.naam }} heeft geen functie-eisen.
+	{% endif %}
