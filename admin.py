@@ -42,9 +42,9 @@ class FunctieAdmin(admin.ModelAdmin):
     
     class Media:
         # to omit header above all inline records
-        css = { "all" : ("css/hide_admin_original.css",
+        css = { "all" : ("css/bestuursmodel/hide_admin_original.css",
         # and to make width of change list filter 200px
-                         "css/change_list_filter_right_200.css",) }
+                         "css/bestuursmodel/change_list_filter_right_200.css",) }
         js = { "all" : ("js/list_filter_collapse.js",) }
     
     def get_form(self, request, obj=None, **kwargs):

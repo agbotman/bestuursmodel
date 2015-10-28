@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <p>De SVW’27 organisatie is opgedeeld is opgedeeld in 11 afdelingen, die weer gegroepeerd zijn in 5 sectoren. Voor iedere afdeling is er een verantwoordelijk hoofdbestuurslid.<br>
     De 5 sectoren met hun afdelingen zijn:
 <ul>
@@ -15,7 +16,7 @@
 </p>
 <p>In onderstaande afbeelding is dit schematisch weergegeven</p>
 <p><div class="image">
-        <img src="{{ STATIC_URL }}/media/sectoren.png">
+        <img src="{% static "media/bestuursmodel/sectoren.png" %}">
         <div>Sectoren en afdelingen</div>
     </div>
 </p>
