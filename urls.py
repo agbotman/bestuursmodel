@@ -14,12 +14,7 @@ urlpatterns = [
     url(r'^afdeling/$', afdeling),
     url(r'^afdeling/(\w+)/$', afdeling, name='afdeling'),
     url(r'^afdeling/(\w+)/(\w+)/$', afdeling),
-#    url(r'^functie/$', ListFunctieView.as_view(), name='functie_list'),
     url(r'^functies/$', functies, name='functies'),
     url(r'^functie/(\w+)/$', functie, name='functie'),
-    url(r'^functie/add/$', AddFunctieView.as_view(), name='functie_add'),
-    url(r'^functie/(?P<pk>\d+)/$', ChangeFunctieView.as_view(), name='functie_change'),
-    url(r'^functie/(?P<pk>\d+)/delete/$', FunctieDelete.as_view(), name='functie_delete'),
-#    url(r'^bestuursmodel/functietype/$', ListFunctietypeView.as_view(), name='functietype_list'),
     url(r'^inleiding/', include(beschrijving_patterns)),
 ]

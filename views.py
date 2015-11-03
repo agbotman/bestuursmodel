@@ -72,38 +72,3 @@ def functie(request, functieid=1):
                                'uurtotaal': functie.functietaakdetails.aggregate(Sum('uur_per_maand')),
                                }
                   )
-
-class FunctieUpdate(UpdateView):
-    model = Functie
-    fields = ['naam', 'beschrijving', 'afdeling', 'functietype', 'functietaken']
-    
-class FunctieDelete(DeleteView):
-    model = Functie
-    success_url = reverse_lazy('functie_list')
-    
-class AddFunctieView(CreateView):
-    form_class = FunctieForm
-    template_name = 'bestuursmodel/functie_form.html'
-    success_url = reverse_lazy('functie_list')
-    
-    def get_context_data(self, **kwargs):
-        context = super(AddFunctieView, self).get_context_data(**kwargs)
-        context['functies'] = Functie.objects.all()
-        return context
-
-    
-class ChangeFunctieView(UpdateView):
-    form_class = FunctieForm
-    model = Functie
-    success_url = reverse_lazy('functie_list')
-    
-    def get_context_data(self, **kwargs):
-        context = super(ChangeFunctieView, self).get_context_data(**kwargs)
-        context['functies'] = Functie.objects.all()
-        return context
-
-class ListFunctieView(ListView):
-    template_name = 'functie.html'
-    queryset = Functie.objects.order_by('afdeling')
-        
-    
