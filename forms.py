@@ -54,6 +54,7 @@ class FunctieForm(ModelForm):
 
     class Meta:
         model = Functie
+        fields = '__all__'
         
     def is_valid(self):
         if super(FunctieForm, self).is_valid():
@@ -70,6 +71,7 @@ class FunctieForm(ModelForm):
 TakenFormSet = inlineformset_factory(Functie, 
     Functie.taken.through,
     can_delete=True,
+    fields='__all__',
     extra=1)
     
 class TakenFormSetHelperInline(FormHelper):
