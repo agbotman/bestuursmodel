@@ -1,15 +1,17 @@
 {% extends "bestuursmodel_base.html" %}
 {% block main_panel %}
-	<h3>{{ functie.naam }}</h3>
+    <h1>{% block title %}Bestuursmodel SVW'27{% endblock %}</h1>
+
+	<h2>{{ functie.naam }}</h2>
     {{ functie.beschrijving|linebreaksbr }}
-    <h4>Plaats in de organisatie</h4>
+
+    <h3>Plaats in de organisatie</h3>
     {{ functie.naam }} maakt deel uit van  <a href="{% url 'afdeling' functie.afdeling.id %}">{{ functie.afdeling }}</a>.
 
+    <h3>Taken</h3>
+    {% include "functie_taken.html" %}
 
-<h4>Taken</h4>
-{% include "functie_taken.html" %}
-
-<h4>Functie-eisen</h4>
-{% include "functie_eisen.html" %}
+    <h3>Functie-eisen</h3>
+    {% include "functie_eisen.html" %}
 
 {% endblock %}

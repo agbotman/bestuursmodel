@@ -1,5 +1,23 @@
 {% extends "bestuursmodel_base.html" %}
 {% block main_panel %}
-	{% include "afdeling_base.html" %}
+    <h1>{% block title %}Bestuursmodel SVW'27{% endblock %}</h1>
+    <h2>{{ afdeling.naam }}</h2>
+    {{ afdeling.taakbeschrijving|linebreaksbr }}
+    {% if afdeling.rapporteert_aan %}
+        {{ afdeling.naam }} rapporteert aan <a href="/bestuursmodel/afdeling/{{afdeling.rapporteert_aan.id}}"> {{afdeling.rapporteert_aan.naam}}</a>.
+    {% endif %}
+
+    <h3>Taken</h3>
+    {% include "afdeling_taken.html" %}
+
+    {% if afdeling.get_children %}
+        <h3>Afdelingen en commissies</h3>
+        {% include "afdeling_children.html" %}
+    {% endif %}
+
+    {% if afdeling.functies.count %}
+        <h3>Functies</h3>
+        {% include "afdeling_functies.html" %}
+    {% endif %}
 {% endblock %}
 
