@@ -32,9 +32,6 @@ class Afdeling(MPTTModel):
 class Functie(models.Model):
     naam = models.CharField(max_length=100, unique=True)
     beschrijving = models.TextField("Functiebeschrijving")
-    afdeling = models.ForeignKey("Afdeling",
-                                 related_name="functies",
-                                 blank=True, null=True)
     functietype = models.ForeignKey('FunctieType',
                                  blank=True, null=True)
     taken = models.ManyToManyField("FunctieTaak", through='FunctieTaakDetails')
