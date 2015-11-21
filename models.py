@@ -15,6 +15,8 @@ class Afdeling(MPTTModel):
     permanent = models.BooleanField(default=True)
     startdatum = models.DateField(blank=True, null=True)
     einddatum = models.DateField(blank=True, null=True)
+    afdeling_functies = models.ManyToManyField("Functie", through='Afdeling_Functie',
+                                                related_name="functie_afdelingen")
 
     class Meta:
         ordering = ["naam"]
@@ -46,6 +48,13 @@ class Functie(models.Model):
 
     def __unicode__(self):
         return self.naam
+        
+class Afdeling_Functie(models.Model):
+    """ To store the m2m relation between Afdeling and Functie
+    """
+    afdeling = models.ForeignKey(Afdeling)
+    functie = models.ForeignKey(Functie)
+    beschrijving = models.CharField(max_length=100)
 
 class Taak(models.Model):
     """ Taak die behoort bij een afdeling
