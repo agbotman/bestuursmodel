@@ -36,9 +36,9 @@ class FunctieAdmin(admin.ModelAdmin):
         FunctieTaakInline,
     ]
     
-    list_display = ('naam', 'afdeling', 'functietype')
-    list_editable = ('afdeling', 'functietype')
-    list_filter = ('afdeling',)
+    list_display = ('naam', 'functietype')
+    list_editable = ('functietype',)
+    list_filter = ()
     
     class Media:
         # to omit header above all inline records
