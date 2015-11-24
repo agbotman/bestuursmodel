@@ -15,8 +15,8 @@ class Afdeling(MPTTModel):
     permanent = models.BooleanField(default=True)
     startdatum = models.DateField(blank=True, null=True)
     einddatum = models.DateField(blank=True, null=True)
-    afdeling_functies = models.ManyToManyField("Functie", through='Afdeling_Functie',
-                                                related_name="functie_afdelingen")
+    functies = models.ManyToManyField("Functie", through='Afdeling_Functie',
+                                                related_name="afdelingen")
 
     class Meta:
         ordering = ["naam"]

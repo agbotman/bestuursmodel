@@ -6,8 +6,16 @@
     {{ functie.beschrijving|linebreaksbr }}
 
     <h3>Plaats in de organisatie</h3>
-    {{ functie.naam }} maakt deel uit van  <a href="{% url 'afdeling' functie.afdeling.id %}">{{ functie.afdeling }}</a>.
-
+    {{ functie.naam }} maakt deel uit van de volgende afdelingen:
+    {% for afdeling_functie in functie.afdeling_functie_set.all %}
+        <ul>
+            <li><a href="{% url 'afdeling' afdeling_functie.afdeling.id %}">{{ afdeling_functie.afdeling }}</a>
+            {% if afdeling_functie.beschrijving %}
+                : {{ afdeling_functie.beschrijving|linebreaksbr }}
+            {% endif %}
+            </li>
+        </ul>
+    {% endfor %}
     <h3>Taken</h3>
     {% include "functie_taken.html" %}
 

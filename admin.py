@@ -16,24 +16,20 @@ class FunctieTaakInline(admin.TabularInline):
     extra = 1
     verbose_name_plural = "Taken voor deze functie"
     
-    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
-        field = super(FunctieTaakInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
-        if db_field.name == 'functietaak':
-            if request._obj_ is not None:
-                obj_functietype = request._obj_.functietype.id
-                field.queryset = field.queryset.filter(functietype__id = obj_functietype)
-            else:
-                field.queryset = field.queryset.none()
-        return field
-   
+class FunctieAfdelingenInline(admin.TabularInline):
+    model = Afdeling_Functie
+    extra = 1
+    verbose_name_plural = "Afdelingen voor deze functie"
+    
 class FunctieAdmin(admin.ModelAdmin):
     model = Functie
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':40})},
     }
     inlines = [
-        FunctieEisInline,
         FunctieTaakInline,
+        FunctieAfdelingenInline,
+        FunctieEisInline,
     ]
     
     list_display = ('naam', 'functietype')
@@ -46,16 +42,6 @@ class FunctieAdmin(admin.ModelAdmin):
         # and to make width of change list filter 200px
                          "css/bestuursmodel/change_list_filter_right_200.css",) }
         js = { "all" : ("js/list_filter_collapse.js",) }
-    
-    def get_form(self, request, obj=None, **kwargs):
-        # order afdeling op naam ipv mptt order
-        form = super(FunctieAdmin, self).get_form(request, obj, **kwargs)
-        qs = form.base_fields['afdeling'].queryset
-        form.base_fields['afdeling'].queryset = qs.order_by('naam')
-        
-        # store object in request for future processing in inlines
-        request._obj_ = obj
-        return form
                
 class AfdelingAdminForm(ModelForm):
     class Meta:
