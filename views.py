@@ -14,7 +14,6 @@ from django.core.urlresolvers import reverse_lazy
 from django.db.models import Sum
 
 def bestuursmodel(request):
-    activelink = "bestuursmodel"
     if request.path == "/bestuursmodel/":
         detail = 'inleiding'
     else:
@@ -23,10 +22,9 @@ def bestuursmodel(request):
     if detail == 'planningcontrol':
         title = 'Planning & Control'
     else:
-        title = detail.title()
+        title = detail.title()  # title case
     return render(request, 'bestuursmodel.html',
-                             {'activelink': activelink,
-                              'sublink': detail,
+                             {'sublink': detail,
                               'detail_html': detail_html,
                               'title': title,
 							   }
