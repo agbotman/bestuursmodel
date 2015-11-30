@@ -24,8 +24,7 @@ def bestuursmodel(request):
     else:
         title = detail.title()  # title case
     return render(request, 'bestuursmodel.html',
-                             {'sublink': detail,
-                              'detail_html': detail_html,
+                             {'detail_html': detail_html,
                               'title': title,
 							   }
                   )
