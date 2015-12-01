@@ -7,10 +7,10 @@ class Afdeling(MPTTModel):
     naam = models.CharField(max_length=45, unique=True)
     taakbeschrijving = models.TextField("Taakbeschrijving")
     rapporteert_aan = TreeForeignKey("Afdeling",
-                                      related_name="commissies",
+                                      related_name="afdelingen",
                                       blank=True, null=True)
     sector = models.ForeignKey("Sector",
-                                 related_name="functies",
+                                 related_name="afdelingen",
                                blank=True, null=True)
     permanent = models.BooleanField(default=True)
     startdatum = models.DateField(blank=True, null=True)

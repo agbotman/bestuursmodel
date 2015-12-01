@@ -23,11 +23,12 @@ def bestuursmodel(request):
         title = 'Planning & Control'
     else:
         title = detail.title()  # title case
-    return render(request, 'bestuursmodel.html',
-                             {'detail_html': detail_html,
-                              'title': title,
-							   }
-                  )
+    context = {'detail_html': detail_html,
+               'title': title,
+              }
+    if detail == 'sectoren':
+        context['sectoren'] = Sector.objects.all()
+    return render(request, 'bestuursmodel.html', context)
 
 def afdelingen(request):
     if 'q' in request.GET and request.GET['q']:

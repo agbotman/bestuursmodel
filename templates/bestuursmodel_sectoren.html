@@ -1,23 +1,17 @@
 {% load staticfiles %}
-<p>De SVW’27 organisatie is opgedeeld is opgedeeld in 11 afdelingen, die weer gegroepeerd zijn in 5 sectoren. Voor iedere afdeling is er een verantwoordelijk hoofdbestuurslid.<br>
-    De 5 sectoren met hun afdelingen zijn:
+<p>De SVW’27 organisatie is opgedeeld is opgedeeld in {{ hb.afdelingen.count }} afdelingen, die weer gegroepeerd zijn in {{ sectoren.count }} sectoren. Voor iedere afdeling is er een verantwoordelijk hoofdbestuurslid.<br>
+De {{ sectoren.count }} sectoren met hun afdelingen zijn:
+
 <ul>
-    <li>Dagelijks bestuur</li>
-        Voorzitter, Financiele zaken, Secretariaat
-    <li>Facilitair</li>
-        Kleding en materialen, Vastgoed en Terreinen, Horeca
-    <li>Voetbal</li>
-        Voetbal Technische Zaken, Voetbalzaken
-    <li>Extern</li>
-        Sponsoring, Public Relations
-    <li>Gedragcodes</li>
-        Gedragcodes (arbitrage, vertrouwenspersoon, scheidsrechters,...)
+    {% for sector in sectoren %}
+    <li> <b>{{ sector.naam }} </b>: {{ sector.beschrijving }}</li>
+         <ul>
+         {% for afdeling in sector.afdelingen.all %}
+            <li>{{ afdeling.naam }}</li>
+         {% endfor %}
+         </ul>
+    {% endfor %}
 </ul>
 </p>
-<p>In onderstaande afbeelding is dit schematisch weergegeven</p>
-<p><div class="image">
-        <img src="{% static "media/bestuursmodel/sectoren.png" %}">
-        <div>Sectoren en afdelingen</div>
-    </div>
-</p>
+
 
